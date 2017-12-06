@@ -1,0 +1,7 @@
+   Current data set:
+   NAME =	ODCB	EXPNO =	2000	PROCNO = 1
+   USER =	dima	DU    =	D:
+
+   Number   Integrated Region     Integral
+     1      7.562      7.486         1.00000
+     2      7.352      7.275         1.00719

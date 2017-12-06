@@ -1,0 +1,17 @@
+// AU Programm
+
+char path[PATH_MAX];
+strcpy(path,ACQUPATH("acqus")); // Getting the full path to acqus file
+path[strlen(path)-6]=0;         // Cutting '/acqus' tail
+chdir(path);                    // Setting current directory to EXPNO directory 
+
+#ifdef HAS_WINDOWS_FEATURES
+sprintf(path,"%s/anatolia/ANATOLIA.EXE",PathXWinNMRProg()); // TopSpinHomeDir/prog/anatolia/ANATOLIA.EXE
+#else
+sprintf(path,"%s/anatolia/ANATOLIA",PathXWinNMRProg()); // TopSpinHomeDir/prog/anatolia/ANATOLIA
+#endif
+
+if(access(path, 1) != 0) STOPMSG ("Can not find ANATOLIA executable file!");
+system(path);
+
+QUIT

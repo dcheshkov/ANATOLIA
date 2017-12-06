@@ -1,0 +1,28 @@
+Analysis of ODCB 1H NMR spectrum
+
+SimMode	0
+
+Spin System
+NSpins 4
+Chemical shift indices
+1  1  2  2
+J-coupling indices
+   3  4  5
+      5  4 
+         6
+
+Spectra parameters
+PathToDataSet			./
+ExpProcNo			1
+ExpBroadedProcNo		-
+CalcProcNo			3
+
+Optimization parameters
+InputParameters			parameters_start.txt
+OutputParameters		parameters.txt
+SpectraTextOutput		-
+LBs				3.0 2.0 1.0 0.8 0.6 0.4 0.2 0.1 0.0
+MagnitudeFromExpSpec		1
+
+List of optimized parameters
+1 2 3 4 5 6 7 8

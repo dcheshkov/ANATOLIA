@@ -403,7 +403,7 @@ public:
 				bsj = bs * j;
 				bFij = bFi[j + 1];
 				element = 0;
-				
+
 				for (int k = 1; k <= nSpins; k++)
 					SpinsIz[k] = (getbit(bFij, nSpins - k + 1) == 1) ? -1 : 1;
 
@@ -650,7 +650,7 @@ public:
 
 };
 
-class PreOptimization
+class Spectrum
 {
 
 public:
@@ -680,8 +680,9 @@ public:
 	double SumOfExpSquaresOnIntervals;
 	char* SpectraTextOutputFilename;
 	bool ScaleOpt;
+	bool FineCalc;
 
-	PreOptimization(Hamiltonian* Ham, ifstream& istr)
+	Spectrum(Hamiltonian* Ham, ifstream& istr)
 	{
 
 		Hami = Ham;
@@ -703,6 +704,7 @@ public:
 		nIntervals = 0;
 		nPointsRated = 0;
 		ScaleOpt = false;
+		FineCalc = true;
 
 		StartPoint = NULL;
 		EndPoint = NULL;
@@ -911,7 +913,7 @@ public:
 				}
 			delete[] Points;
 			ExperimentalSpecWithBroadening.Rescale(0);
-			step = int(LB / (2 * FreqStep)); if (step == 0) step = 1;
+			step = int(LB / (2 * FreqStep)); if ((step == 0) || FineCalc) step = 1;
 		}
 		else
 		{
@@ -946,7 +948,7 @@ public:
 		double* Freqs = Hami->FreqsFiltered;
 		double* Intens = Hami->IntensFiltered;
 
-		if (nPointsRated > nFreqs)
+		if (FineCalc)
 		{
 			for (int i = 1; i <= nPointsRated; i++)
 			{
@@ -957,30 +959,29 @@ public:
 					tmp = CurrFreq - Freqs[j]; tmp *= tmp;
 					tmp1 += Intens[j] / (tmp + sqLW);
 				}
-
 				TheorSpecPointsOnIntervals[i] = tmp1;
 				if (MaxIntense < tmp1) MaxIntense = tmp1;
 			}
 		}
 		else
 		{
-			for (int i = 1; i <= nPointsRated; i++) TheorSpecPointsOnIntervals[i] = 0;
-
-			for (int i = 1; i <= nFreqs; i++)
-			{
-
-				CurrFreq = Freqs[i];
-				double Intensity = Intens[i];
-
-				for (int j = 1; j <= nPointsRated; j++)
-				{
-					tmp = FreqsOnIntervals[j] - CurrFreq; tmp *= tmp;
-					TheorSpecPointsOnIntervals[j] += Intensity / (tmp + sqLW);
-				}
-			}
-
+			tmp2 = 25 * LW;
 			for (int i = 1; i <= nPointsRated; i++)
-				if (MaxIntense < TheorSpecPointsOnIntervals[i]) MaxIntense = TheorSpecPointsOnIntervals[i];
+			{
+				CurrFreq = FreqsOnIntervals[i];
+				tmp1 = 0;
+				for (int j = 1; j <= nFreqs; j++)
+				{
+					tmp = abs(CurrFreq - Freqs[j]);
+					if (tmp < tmp2)
+					{
+						tmp *= tmp;
+						tmp1 += Intens[j] / (tmp + sqLW);
+					}
+				}
+				TheorSpecPointsOnIntervals[i] = tmp1;
+				if (MaxIntense < tmp1) MaxIntense = tmp1;
+			}
 		}
 
 		//Rescale TheorSpec on intervals
@@ -1160,15 +1161,15 @@ public:
 	double** ParameterCorrelations;
 	double* LBs;
 	char** ParNames;
-	PreOptimization* PreOpt;
+	Spectrum* Spec;
 	bool ErrorsComputed;
 	bool LWPreOpt;
 
-	OptHamiltonian(PreOptimization* Pre)
+	OptHamiltonian(Spectrum* OptSpec)
 	{
 
-		PreOpt = Pre;
-		nParams = Pre->Hami->nParams + 2;
+		Spec = OptSpec;
+		nParams = OptSpec->Hami->nParams + 2;
 		nVarParams = 0;
 		nBroadenings = 0;
 		LBs = NULL;
@@ -1240,7 +1241,7 @@ public:
 
 		istr >> Parameters[nParams];
 		if (istr.fail() || Parameters[nParams] < 0) { cout << "Incorrect value of parameter " << nParams << " (spectrum magnitude)." << endl; exit_; }
-		PreOpt->TheoreticalSpec.Magnitude = Parameters[nParams];
+		Spec->TheoreticalSpec.Magnitude = Parameters[nParams];
 		istr.close();
 
 	}
@@ -1249,21 +1250,21 @@ public:
 	{
 
 		bool check = false;
-		int MaxOffs = PreOpt->Hami->Offs[nSpins];
+		int MaxOffs = Spec->Hami->Offs[nSpins];
 
 		for (int i = 1; i <= MaxOffs; i++)
 		{
 			check = false;
-			for (int j = 1; j <= PreOpt->nIntervals; j++)
-				if (Parameters[i] <= PreOpt->GetIntervalStartFreq(j) && Parameters[i] >= PreOpt->GetIntervalEndFreq(j)) check = true;
+			for (int j = 1; j <= Spec->nIntervals; j++)
+				if (Parameters[i] <= Spec->GetIntervalStartFreq(j) && Parameters[i] >= Spec->GetIntervalEndFreq(j)) check = true;
 			if (!check) ostr << "Warning! Chemical shift no. " << i << " (" << Parameters[i] << ") does not fall into any of defined spectral intervals." << endl;
 		}
 
-		for (int i = 1; i <= PreOpt->nIntervals; i++)
+		for (int i = 1; i <= Spec->nIntervals; i++)
 		{
 			check = false;
 			for (int j = 1; j <= MaxOffs; j++)
-				if (Parameters[j] <= PreOpt->GetIntervalStartFreq(i) && Parameters[j] >= PreOpt->GetIntervalEndFreq(i)) check = true;
+				if (Parameters[j] <= Spec->GetIntervalStartFreq(i) && Parameters[j] >= Spec->GetIntervalEndFreq(i)) check = true;
 			if (!check) ostr << "Warning! Spectral interval no. " << i << " does not contain any chemical shift." << endl;
 		}
 
@@ -1339,8 +1340,8 @@ public:
 				if (VarParams[i] == nParams - 1) LWPreOpt = true;
 		}
 
-		PreOpt->ScaleOpt = false;
-		if (VarParams[nVarParams] == nParams) { PreOpt->ScaleOpt = true; nVarParams--; }
+		Spec->ScaleOpt = false;
+		if (VarParams[nVarParams] == nParams) { Spec->ScaleOpt = true; nVarParams--; }
 
 		if (nVarParams == 0) { cout << "Nothing to optimize!" << endl; exit_; }
 
@@ -1349,10 +1350,10 @@ public:
 	void SetParametersToHamiltonian(void)
 	{
 
-		double* HamParams = PreOpt->Hami->Parameters;
+		double* HamParams = Spec->Hami->Parameters;
 		for (int i = 1; i <= nParams - 2; i++) HamParams[i] = Parameters[i];
-		PreOpt->LineWidth = Parameters[nParams - 1];
-		PreOpt->TheoreticalSpec.Magnitude = Parameters[nParams];
+		Spec->LineWidth = Parameters[nParams - 1];
+		Spec->TheoreticalSpec.Magnitude = Parameters[nParams];
 
 	}
 
@@ -1360,22 +1361,22 @@ public:
 	{
 
 		SetParametersToHamiltonian();
-		double Badn = PreOpt->Badness();
-		if (PreOpt->ScaleOpt) Parameters[nParams] = PreOpt->TheoreticalSpec.Magnitude;
+		double Badn = Spec->Badness();
+		if (Spec->ScaleOpt) Parameters[nParams] = Spec->TheoreticalSpec.Magnitude;
 		return Badn;
 
 	}
 
-	void ComputeErrors()
+	void ComputeErrors(void)
 	{
 
 		ErrorsComputed = false;
-		bool ScaleOpt = PreOpt->ScaleOpt;
-		PreOpt->ScaleOpt = false;
+		bool ScaleOpt = Spec->ScaleOpt;
+		Spec->ScaleOpt = false;
 
 		double** TheorSpecDerivativesOnIntervals = new double*[nParams + 1];
 		TheorSpecDerivativesOnIntervals[0] = NULL;
-		int nPoints = PreOpt->nPointsRated;
+		int nPoints = Spec->nPointsRated;
 		for (int i = 1; i <= nParams; i++)
 		{
 			TheorSpecDerivativesOnIntervals[i] = new double[nPoints + 1];
@@ -1389,22 +1390,25 @@ public:
 		double Badn = Badness();
 
 		for (int i = 1; i <= nPoints; i++)
-			Data[i] = PreOpt->TheorSpecPointsOnIntervals[i];
-
-		for (int i = 1; i <= nParams; i++)
 		{
-			double step = i == nParams ? 10 : 1.0e-7;
+			Data[i] = Spec->TheorSpecPointsOnIntervals[i];
+			TheorSpecDerivativesOnIntervals[nParams][i] = Spec->TheorSpecPointsOnIntervals[i];
+		}
+
+		for (int i = 1; i <= nParams - 1; i++)
+		{
+			double step = 1.0e-7;
 			double Par = Parameters[i];
 			Parameters[i] += step;
 			SetParametersToHamiltonian();
-			PreOpt->ComputeSpecOnIntervals();
+			Spec->ComputeSpecOnIntervals();
 			Parameters[i] = Par;
 			for (int j = 1; j <= nPoints; j++)
-				TheorSpecDerivativesOnIntervals[i][j] = (PreOpt->TheorSpecPointsOnIntervals[j] - Data[j]) / step;
+				TheorSpecDerivativesOnIntervals[i][j] = (Spec->TheorSpecPointsOnIntervals[j] - Data[j]) / step;
 		}
 
 		for (int i = 1; i <= nPoints; i++)
-			PreOpt->TheorSpecPointsOnIntervals[i] = Data[i];
+			Spec->TheorSpecPointsOnIntervals[i] = Data[i];
 		delete[] Data;
 
 		gsl_matrix *DTD = gsl_matrix_alloc(nParams, nParams);
@@ -1412,10 +1416,11 @@ public:
 		for (int i = 1; i <= nParams; i++)
 			for (int j = i; j <= nParams; j++)
 			{
-				DTD->data[nParams*(i - 1) + j - 1] = 0;
+				double tmp = 0;
 				for (int k = 1; k <= nPoints; k++)
-					DTD->data[nParams*(i - 1) + j - 1] += TheorSpecDerivativesOnIntervals[i][k] * TheorSpecDerivativesOnIntervals[j][k];
-			};
+					tmp += TheorSpecDerivativesOnIntervals[i][k] * TheorSpecDerivativesOnIntervals[j][k];
+				DTD->data[nParams*(i - 1) + j - 1] = tmp;
+			}
 
 		for (int i = 0; i < nParams; i++)
 			for (int j = i + 1; j < nParams; j++)
@@ -1431,12 +1436,11 @@ public:
 
 		gsl_eigen_symmv(DTD, eval, evec, w);
 		gsl_eigen_symmv_free(w);
-		
+
 		gsl_eigen_symmv_sort(eval, evec, GSL_EIGEN_SORT_ABS_ASC);
 
 		if (eval->data[0] > 1e-4)
 		{
-
 			gsl_matrix_set_all(DTD, 0);
 
 			for (int i = 0; i < nParams; i++)
@@ -1451,6 +1455,8 @@ public:
 					ParameterCorrelations[i + 1][j + 1] = DTD->data[i*nParams + j] / sqrt(DTD->data[i*nParams + i] * DTD->data[j*nParams + j]);
 			}
 
+			ParameterErrors[nParams] *= Parameters[nParams];
+
 			ErrorsComputed = true;
 		}
 
@@ -1458,7 +1464,7 @@ public:
 		gsl_vector_free(eval);
 		gsl_matrix_free(DTD);
 
-		PreOpt->ScaleOpt = ScaleOpt;
+		Spec->ScaleOpt = ScaleOpt;
 
 	}
 
@@ -1478,10 +1484,9 @@ public:
 		ostr << fixed;
 		for (int i = 1; i <= nParams; i++)
 		{
-			double Param = Parameters[i];
 			if (i == nParams) { ostr << scientific; }
 			ostr << setw(4) << left << i << setw(parnamelen) << left << ParNames[i];
-			ostr << setw(13) << right << Param;
+			ostr << setw(13) << right << Parameters[i];
 			if (ErrorsComputed) ostr << setw(4) << ' ' << "+-" << ParameterErrors[i];
 			ostr << endl;
 		}
@@ -1493,16 +1498,16 @@ public:
 		CheckSpinOffsets(ostr);
 		CheckBroadSequence(ostr);
 
-		ostr << "Line Broadening: " << fixed << PreOpt->LB << endl;
-		ostr << "Theoretical spectrum linewidth: " << PreOpt->LB + Parameters[nParams - 1] << endl;
+		ostr << "Line Broadening: " << fixed << Spec->LB << endl;
+		ostr << "Theoretical spectrum linewidth: " << Spec->LB + Parameters[nParams - 1] << endl;
 		ostr << "RSS Value: " << scientific << Badness() << endl;
 		ostr.precision(2);
-		ostr << "R-Factor: " << fixed << PreOpt->CalcRFactor() << " %" << endl;
+		ostr << "R-Factor: " << fixed << Spec->CalcRFactor() << " %" << endl;
 		ostr.precision(defaultprecision);
-		ostr << "Spectra correlation coefficient: " << PreOpt->CalcSpectraColleration() << endl;
+		ostr << "Spectra correlation coefficient: " << Spec->CalcSpectraColleration() << endl;
 		ostr << endl;
 
-		PreOpt->Hami->PrintSpinSystem(ostr, (PreOpt->BF + PreOpt->SR * 1e-6));
+		Spec->Hami->PrintSpinSystem(ostr, (Spec->BF + Spec->SR * 1e-6));
 		ostr << endl;
 
 		if (ErrorsComputed)
@@ -1532,8 +1537,8 @@ OptHamiltonian* HamOpt = NULL;
 double GlobalBadnessScWd(const long n, const double* x, void* data)
 {
 
-	HamOpt->PreOpt->LineWidth = x[0];
-	return HamOpt->PreOpt->BadnessScWd();
+	HamOpt->Spec->LineWidth = x[0];
+	return HamOpt->Spec->BadnessScWd();
 
 }
 
@@ -1590,49 +1595,49 @@ int main(int argc, char* argv[])
 	input.getline(textline, 256);   //  Empty line
 	if (!isemptyline(textline)) { cout << "Empty line should follow the section with spin system description!" << endl; exit_; }
 	input.getline(textline, 256);   //  Spectra parameters
-	PreOptimization Pre(&Hami, input);
-	HamOpt = new OptHamiltonian(&Pre);
+	Spectrum Spec(&Hami, input);
+	HamOpt = new OptHamiltonian(&Spec);
 	input.getline(textline, 256);   //  Empty line
 	if (!isemptyline(textline)) { cout << "Empty line should follow the section with spectra parameters!" << endl; exit_; }
 	input.getline(textline, 256);   //  Optimization parameters
 	input >> textline >> HamOpt->InputParameters; // Input parameters filename
 	HamOpt->LoadParameters();       // Reading input parameters from file
-	Pre.TheoreticalSpec.Create();
+	Spec.TheoreticalSpec.Create();
 	input >> textline >> HamOpt->OutputParameters; // Output parameters filename
 	input.getline(textline, 256);   //  Rest of output parameters filename line
-	input >> textline >> Pre.SpectraTextOutputFilename; // Filename for spectra in ASCII text format
+	input >> textline >> Spec.SpectraTextOutputFilename; // Filename for spectra in ASCII text format
 	input.getline(textline, 256);   //  Rest of SpectraTextOutputFilename line
 	HamOpt->LoadBroadenings(input); //  Parsing of broadenings list
 	HamOpt->CheckBroadSequence(cout);
 	input >> textline >> MagnitudeFromExpSpec;   //  MagnitudeFromExpSpec
 	if (input.fail()) { cout << "Wrong MagnitudeFromExpSpec flag value, sould be 0 or 1." << endl; exit_; }
 	input.getline(textline, 256);   //  Rest of MagnitudeFromExpSpec line
-	Pre.ExperimentalSpec.LoadSpecFromFile();
-	if (Pre.ExperimentalSpec.nPoints != Pre.TheoreticalSpec.nPoints) { cout << "File with experimental spectrum is corrupted." << endl; exit_; }
-	Pre.LoadIntervals();            // Loading and computing of points intervals on the basis of intergal regions from integrals.txt.
+	Spec.ExperimentalSpec.LoadSpecFromFile();
+	if (Spec.ExperimentalSpec.nPoints != Spec.TheoreticalSpec.nPoints) { cout << "File with experimental spectrum is corrupted." << endl; exit_; }
+	Spec.LoadIntervals();            // Loading and computing of points intervals on the basis of intergal regions from integrals.txt.
 	HamOpt->CheckSpinOffsets(cout);
-	Pre.CalcExpSpecMagnOnIntervals();
-	Pre.ExperimentalSpecWithBroadening.Magnitude = Pre.ExperimentalSpec.Magnitude;
+	Spec.CalcExpSpecMagnOnIntervals();
+	Spec.ExperimentalSpecWithBroadening.Magnitude = Spec.ExperimentalSpec.Magnitude;
 
 	if (MagnitudeFromExpSpec)
 	{
-		Pre.TheoreticalSpec.Magnitude = Pre.ExperimentalSpec.Magnitude;
-		HamOpt->Parameters[HamOpt->nParams] = Pre.ExperimentalSpec.Magnitude;
+		Spec.TheoreticalSpec.Magnitude = Spec.ExperimentalSpec.Magnitude;
+		HamOpt->Parameters[HamOpt->nParams] = Spec.ExperimentalSpec.Magnitude;
 	}
 
-	Pre.ExperimentalSpecWithBroadening.Create();
+	Spec.ExperimentalSpecWithBroadening.Create();
 
 	if (SimMode)
 	{
 		HamOpt->SetParametersToHamiltonian();
 		Hami.ComputeFreqIntens();
-		Pre.BroadOnIntervals(HamOpt->LBs[1]);
-		Pre.ExperimentalSpecWithBroadening.SaveSpecToFile();
-		Pre.CalcSpecOnIntervals();
-		Pre.SaveSpecsOnIntervalsTXT();
-		Pre.LB = 0;
-		Pre.CalcFullSpectrum();
-		Pre.TheoreticalSpec.SaveSpecToFile();
+		Spec.BroadOnIntervals(HamOpt->LBs[1]);
+		Spec.ExperimentalSpecWithBroadening.SaveSpecToFile();
+		Spec.CalcSpecOnIntervals();
+		Spec.SaveSpecsOnIntervalsTXT();
+		Spec.LB = 0;
+		Spec.CalcFullSpectrum();
+		Spec.TheoreticalSpec.SaveSpecToFile();
 		print_citation(cout);
 		input.close();
 		exit_;
@@ -1662,30 +1667,32 @@ int main(int argc, char* argv[])
 		WS[i] = 0;
 
 	n = HamOpt->nVarParams;
+	npt = 2 * n + 1;
+	Spec.FineCalc = false;
 
 	for (int k = 1; k <= HamOpt->nBroadenings; k++)
 	{
 
-		Pre.BroadOnIntervals(HamOpt->LBs[k]);
+		if(k == HamOpt->nBroadenings) Spec.FineCalc = true;
+		Spec.BroadOnIntervals(HamOpt->LBs[k]);
 
 		cout << "Broadening:  " << HamOpt->LBs[k] << endl;
 
-		// Linewidth preoptimization
 		if (HamOpt->LWPreOpt)
 		{
 
-			cout << "Linewidth preoptimization" << endl;
+			cout << "Spectrum linewidth preoptimization" << endl;
 
 			HamOpt->SetParametersToHamiltonian();
 			Hami.ComputeFreqIntens();
-			
+
 			Params[0] = HamOpt->Parameters[HamOpt->nParams - 1];
 			ParamsLB[0] = -100;
 			ParamsUB[0] = +100;
 
-			bobyqa(1, 3, GlobalBadnessScWd, NULL, Params, ParamsLB, ParamsUB, 10.0, 1e-10, WS);
+			bobyqa(1, 3, GlobalBadnessScWd, NULL, Params, ParamsLB, ParamsUB, 10, 1e-10, WS);
 			HamOpt->Parameters[HamOpt->nParams - 1] = abs(Params[0]);
-			if(Pre.ScaleOpt) HamOpt->Parameters[HamOpt->nParams] = Pre.TheoreticalSpec.Magnitude;
+			if(Spec.ScaleOpt) HamOpt->Parameters[HamOpt->nParams] = Spec.TheoreticalSpec.Magnitude;
 
 			cout << "Main optimization" << endl;
 
@@ -1698,30 +1705,27 @@ int main(int argc, char* argv[])
 			ParamsUB[i] = Params[i] + 100;
 		}
 
-		npt = 2 * n + 1;
-
 		bobyqa(n, npt, GlobalBadness, NULL, Params, ParamsLB, ParamsUB, 10.0, 1e-10, WS);
 
 		for (int i = 0; i < n; i++)
 			HamOpt->Parameters[HamOpt->VarParams[i + 1]] = Params[i];
 
-		if (HamOpt->Parameters[HamOpt->nParams - 1] < 0) HamOpt->Parameters[HamOpt->nParams - 1] *= -1;
-		if (HamOpt->Parameters[HamOpt->nParams] < 0) HamOpt->Parameters[HamOpt->nParams] *= -1;
-
 		cout << endl;
 	}
 
+	if (HamOpt->Parameters[HamOpt->nParams - 1] < 0) HamOpt->Parameters[HamOpt->nParams - 1] *= -1;
+	if (HamOpt->Parameters[HamOpt->nParams] < 0) HamOpt->Parameters[HamOpt->nParams] *= -1;
+
 	cout << setprecision(2) << fixed
-		<< "R-Factor: " << Pre.CalcRFactor() << " %" << endl
+		<< "R-Factor: " << Spec.CalcRFactor() << " %" << endl
 		<< setprecision(defaultprecision);
 
-	Pre.SaveSpecsOnIntervalsTXT();
+	Spec.SaveSpecsOnIntervalsTXT();
 	HamOpt->SetParametersToHamiltonian();
-	Pre.ComputeFullSpectrum();
-	Pre.TheoreticalSpec.SaveSpecToFile();
-	Pre.ExperimentalSpecWithBroadening.SaveSpecToFile();
+	Spec.ComputeFullSpectrum();
+	Spec.TheoreticalSpec.SaveSpecToFile();
+	Spec.ExperimentalSpecWithBroadening.SaveSpecToFile();
 	HamOpt->ComputeErrors();
-	//HamOpt->SetParametersToHamiltonian();
 	HamOpt->SaveParameters();
 
 	cout << endl;

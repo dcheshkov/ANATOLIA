@@ -1,9 +1,9 @@
 *************************************************************************
-***                             ANATOLIA                              ***
+***                        ANATOLIA V1.1                              ***
 ***              Program for total lineshape analysis                 ***
 ***                         of NMR spectra                            ***
 *************************************************************************
-***         (C) 2017 Dmitry Cheshkov, Dmitry Sinitsyn,                ***
+***         (C) 2019 Dmitry Cheshkov, Dmitry Sinitsyn,                ***
 ***                     Kirill Sheberstov                             ***
 *************************************************************************
 ***                     dcheshkov@gmail.com                           ***
@@ -14,6 +14,12 @@
 ***  ANATOLIA: NMR software for spectral analysis of total lineshape, ***
 ***      Magn. Reson. Chem., 2018, 56, 449, DOI: 10.1002/mrc.4689.    ***
 *************************************************************************
+
+         V1.1 vs. V1.0 contains some improvements with respect
+        to performance and efficiency of calculating algorithm
+        and calculation of parameter correlation coefficients.
+          No changes were made to the format of input files.
+
 
             Working with Bruker NMR format (dataset) only.
  

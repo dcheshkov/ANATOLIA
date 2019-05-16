@@ -35,10 +35,6 @@
           Powell's BOBYQA algoritm used for multidimentional
                         function minimization.
  
-            Versions for ALL platforms compiled and linked 
-            in 'static' mode, so they are a distributed as
-                         single executable files.
- 
          ANATOLIA reads the input files from current directory,
            when called without arguments, or can take path
             to working directory as command line argument.

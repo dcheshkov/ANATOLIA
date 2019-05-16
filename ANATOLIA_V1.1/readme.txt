@@ -15,10 +15,10 @@
 ***      Magn. Reson. Chem., 2018, 56, 449, DOI: 10.1002/mrc.4689.    ***
 *************************************************************************
 
-         V1.1 vs. V1.0 contains some improvements with respect
-        to performance and efficiency of calculating algorithm
-        and calculation of parameter correlation coefficients.
-          No changes were made to the format of input files.
+          V1.1 vs. V1.0 contains some improvements with respect
+         to performance and efficiency of calculating algorithm
+         and calculation of parameter correlation coefficients.
+           No changes were made to the format of input files.
 
 
             Working with Bruker NMR format (dataset) only.
@@ -40,10 +40,6 @@
        GNU scientific library (https://www.gnu.org/software/gsl/).
           Powell's BOBYQA algoritm used for multidimentional
                         function minimization.
- 
-            Versions for ALL platforms compiled and linked 
-            in 'static' mode, so they are a distributed as
-                         single executable files.
  
          ANATOLIA reads the input files from current directory,
            when called without arguments, or can take path

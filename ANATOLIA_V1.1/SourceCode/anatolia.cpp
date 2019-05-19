@@ -105,10 +105,9 @@ int getbitsum(unsigned int number)
 	for (int i = 1; i <= nSpins; i++)
 	{
 		if (number & mask) result++;
-		mask = mask << 1;
+		mask *= 2;
 	}
 	return(result);
-
 }
 
 int getbit(unsigned int number, int position)
@@ -205,7 +204,7 @@ public:
 		istr >> textline >> textline;
 		if (!isunsignint(textline)) { cout << "Check the number of spins (Nspins)!" << endl; exit_; }
 		nSpins = atoi(textline);
-		if(nSpins > 8 * sizeof(unsigned int)) { cout << "Number of spins (Nspins) exceeds the maximum value (" << 8 * sizeof(unsigned int) << ")!"<< endl; exit_; }
+		if (nSpins > 8 * (int)sizeof(unsigned int)) { cout << "Number of spins (Nspins) exceeds the maximum value (" << 8 * sizeof(unsigned int) << ")!" << endl; exit_; }
 		istr.getline(textline, 256);
 		istr.getline(textline, 256); // Shifts indices
 
@@ -526,7 +525,7 @@ public:
 			for (int j = 1; j <= nSpins; j++)
 				if (j <= i) ostr << setw(10) << ' ';
 				else ostr << setw(10) << right << Parameters[Jcoup[i][j]];
-				ostr << endl;
+			ostr << endl;
 		}
 
 		ostr.precision(defaultprecision);
@@ -585,7 +584,7 @@ public:
 
 		double rescaling = Magnitude / (PivotPointIndex == 0 ? CalcMagnitude() : Points[PivotPointIndex]);
 		for (int i = 1; i <= nPoints; i++)
-			Points[i] = rescaling*Points[i];
+			Points[i] = rescaling * Points[i];
 
 	}
 
@@ -814,8 +813,8 @@ public:
 
 		int j = 0;
 		double StartPPM = 0, EndPPM = 0, IntVal = 0;
-		double PPMOffset = (O1_h - SR + 0.5 * SW_h) / (BF + SR*1e-6);
-		double PPMStep = SW_h / ((BF + SR*1e-6) * ExperimentalSpec.nPoints);
+		double PPMOffset = (O1_h - SR + 0.5 * SW_h) / (BF + SR * 1e-6);
+		double PPMStep = SW_h / ((BF + SR * 1e-6) * ExperimentalSpec.nPoints);
 
 		StartPoint = new int[nIntervals + 1];
 		EndPoint = new int[nIntervals + 1];
@@ -853,7 +852,7 @@ public:
 
 		int n = 1;
 		for (int i = 1; i <= nIntervals; i++)
-			for (int j = StartPoint[i]; j <= EndPoint[i]; j ++ )
+			for (int j = StartPoint[i]; j <= EndPoint[i]; j++)
 				FreqsOnIntervals[n++] = Offset - FreqStep * (j - 1);
 
 	}
@@ -1019,7 +1018,7 @@ public:
 
 		for (int i = 1; i <= TheoreticalSpec.nPoints; i++)
 		{
-			CurrFreq = Offset - FreqStep*(i - 1);
+			CurrFreq = Offset - FreqStep * (i - 1);
 			tmp1 = 0;
 			for (int j = 1; j <= nFreqs; j++)
 			{
@@ -1185,7 +1184,7 @@ public:
 		ParNames[0] = NULL; Parameters[0] = 0;
 		ParameterErrors[0] = 0; ParameterCorrelations[0] = NULL;
 		VarParams[0] = 0;
-		for(int i = 1; i <= nParams; i++)
+		for (int i = 1; i <= nParams; i++)
 		{
 			Parameters[i] = 0;
 			ParameterErrors[i] = 0;
@@ -1521,7 +1520,7 @@ public:
 				ostr << endl;
 
 			}
-		ostr << endl;
+			ostr << endl;
 		}
 
 		print_logo(ostr);
@@ -1673,7 +1672,7 @@ int main(int argc, char* argv[])
 	for (int k = 1; k <= HamOpt->nBroadenings; k++)
 	{
 
-		if(k == HamOpt->nBroadenings) Spec.FineCalc = true;
+		if (k == HamOpt->nBroadenings) Spec.FineCalc = true;
 		Spec.BroadOnIntervals(HamOpt->LBs[k]);
 
 		cout << "Broadening:  " << HamOpt->LBs[k] << endl;
@@ -1692,7 +1691,7 @@ int main(int argc, char* argv[])
 
 			bobyqa(1, 3, GlobalBadnessScWd, NULL, Params, ParamsLB, ParamsUB, 10, 1e-10, WS);
 			HamOpt->Parameters[HamOpt->nParams - 1] = abs(Params[0]);
-			if(Spec.ScaleOpt) HamOpt->Parameters[HamOpt->nParams] = Spec.TheoreticalSpec.Magnitude;
+			if (Spec.ScaleOpt) HamOpt->Parameters[HamOpt->nParams] = Spec.TheoreticalSpec.Magnitude;
 
 			cout << "Main optimization" << endl;
 
@@ -1820,7 +1819,7 @@ void prelim(const long n, const long npt,
 	fbeg = zero;
 	ipt = 0;
 	jpt = 0;
-	rhosq = rhobeg*rhobeg;
+	rhosq = rhobeg * rhobeg;
 	recip = one / rhosq;
 	np = n + 1;
 
@@ -1833,7 +1832,7 @@ void prelim(const long n, const long npt,
 			BMAT(i, j) = zero;
 		}
 	}
-	i1 = n*np / 2;
+	i1 = n * np / 2;
 	LOOP(ih, i1) {
 		hq[ih] = zero;
 	}
@@ -1862,11 +1861,11 @@ void prelim(const long n, const long npt,
 				stepa = XPT(*nf - n, nfx);
 				stepb = -rhobeg;
 				if (sl[nfx] == zero) {
-					stepb = two*rhobeg;
+					stepb = two * rhobeg;
 					stepb = MIN(stepb, su[nfx]);
 				}
 				if (su[nfx] == zero) {
-					stepb = -two*rhobeg;
+					stepb = -two * rhobeg;
 					stepb = MAX(stepb, sl[nfx]);
 				}
 				XPT(*nf, nfx) = stepb;
@@ -1874,7 +1873,7 @@ void prelim(const long n, const long npt,
 		}
 		else {
 			itemp = (nfm - np) / n;
-			jpt = nfm - itemp*n - n;
+			jpt = nfm - itemp * n - n;
 			ipt = jpt + itemp;
 			if (ipt > n) {
 				itemp = jpt;
@@ -1912,15 +1911,15 @@ void prelim(const long n, const long npt,
 				if (npt < *nf + n) {
 					BMAT(1, nfm) = -one / stepa;
 					BMAT(*nf, nfm) = one / stepa;
-					BMAT(npt + nfm, nfm) = -half*rhosq;
+					BMAT(npt + nfm, nfm) = -half * rhosq;
 				}
 			}
 			else if (*nf >= n + 2) {
-				ih = nfx*(nfx + 1) / 2;
+				ih = nfx * (nfx + 1) / 2;
 				temp = (f - fbeg) / stepb;
 				diff = stepb - stepa;
-				hq[ih] = two*(temp - gopt[nfx]) / diff;
-				gopt[nfx] = (gopt[nfx] * stepb - temp*stepa) / diff;
+				hq[ih] = two * (temp - gopt[nfx]) / diff;
+				gopt[nfx] = (gopt[nfx] * stepb - temp * stepa) / diff;
 				if (stepa*stepb < zero) {
 					if (f < fval[*nf - n]) {
 						fval[*nf] = fval[*nf - n];
@@ -1941,7 +1940,7 @@ void prelim(const long n, const long npt,
 			}
 		}
 		else {
-			ih = ipt*(ipt - 1) / 2 + jpt;
+			ih = ipt * (ipt - 1) / 2 + jpt;
 			ZMAT(1, nfx) = recip;
 			ZMAT(*nf, nfx) = recip;
 			ZMAT(ipt + 1, nfx) = -recip;
@@ -1992,11 +1991,11 @@ void altmov(const long n, const long npt, double xpt[],
 	LOOP(j, i1) {
 		temp = ZMAT(knew, j);
 		LOOP(k, npt) {
-			hcol[k] += temp*ZMAT(k, j);
+			hcol[k] += temp * ZMAT(k, j);
 		}
 	}
 	*alpha = hcol[knew];
-	ha = half*(*alpha);
+	ha = half * (*alpha);
 
 	LOOP(i, n) {
 		glag[i] = BMAT(knew, i);
@@ -2008,7 +2007,7 @@ void altmov(const long n, const long npt, double xpt[],
 		}
 		temp = hcol[k] * temp;
 		LOOP(i, n) {
-			glag[i] += temp*XPT(k, i);
+			glag[i] += temp * XPT(k, i);
 		}
 	}
 
@@ -2022,7 +2021,7 @@ void altmov(const long n, const long npt, double xpt[],
 		LOOP(i, n) {
 			temp = XPT(k, i) - xopt[i];
 			dderiv += glag[i] * temp;
-			distsq += temp*temp;
+			distsq += temp * temp;
 		}
 		subd = adelt / sqrt(distsq);
 		slbd = -subd;
@@ -2059,19 +2058,19 @@ void altmov(const long n, const long npt, double xpt[],
 		if (k == knew) {
 			diff = dderiv - one;
 			step = slbd;
-			vlag = slbd*(dderiv - slbd*diff);
+			vlag = slbd * (dderiv - slbd * diff);
 			isbd = ilbd;
-			temp = subd*(dderiv - subd*diff);
+			temp = subd * (dderiv - subd * diff);
 			if (abs(temp) > abs(vlag)) {
 				step = subd;
 				vlag = temp;
 				isbd = iubd;
 			}
-			tempd = half*dderiv;
-			tempa = tempd - diff*slbd;
-			tempb = tempd - diff*subd;
+			tempd = half * dderiv;
+			tempa = tempd - diff * slbd;
+			tempb = tempd - diff * subd;
 			if (tempa*tempb < zero) {
-				temp = tempd*tempd / diff;
+				temp = tempd * tempd / diff;
 				if (abs(temp) > abs(vlag)) {
 					step = tempd / diff;
 					vlag = temp;
@@ -2081,9 +2080,9 @@ void altmov(const long n, const long npt, double xpt[],
 		}
 		else {
 			step = slbd;
-			vlag = slbd*(one - slbd);
+			vlag = slbd * (one - slbd);
 			isbd = ilbd;
-			temp = subd*(one - subd);
+			temp = subd * (one - subd);
 			if (abs(temp) > abs(vlag)) {
 				step = subd;
 				vlag = temp;
@@ -2099,8 +2098,8 @@ void altmov(const long n, const long npt, double xpt[],
 			vlag *= dderiv;
 		}
 
-		temp = step*(one - step)*distsq;
-		predsq = vlag*vlag*(vlag*vlag + ha*temp*temp);
+		temp = step * (one - step)*distsq;
+		predsq = vlag * vlag*(vlag*vlag + ha * temp*temp);
 		if (predsq > presav) {
 			presav = predsq;
 			ksav = k;
@@ -2110,7 +2109,7 @@ void altmov(const long n, const long npt, double xpt[],
 	}
 
 	LOOP(i, n) {
-		temp = xopt[i] + stpsav*(XPT(ksav, i) - xopt[i]);
+		temp = xopt[i] + stpsav * (XPT(ksav, i) - xopt[i]);
 		temp = MIN(temp, su[i]);
 		xnew[i] = MAX(temp, sl[i]);
 	}
@@ -2143,14 +2142,14 @@ void altmov(const long n, const long npt, double xpt[],
 		}
 
 		do {
-			temp = adelt*adelt - wfixsq;
+			temp = adelt * adelt - wfixsq;
 			if (temp <= zero) break;
 			wsqsav = wfixsq;
 			step = sqrt(temp / ggfree);
 			ggfree = zero;
 			LOOP(i, n) {
 				if (w[i] == bigstp) {
-					temp = xopt[i] - step*glag[i];
+					temp = xopt[i] - step * glag[i];
 					if (temp <= sl[i]) {
 						w[i] = sl[i] - xopt[i];
 						wfixsq += w[i] * w[i];
@@ -2169,7 +2168,7 @@ void altmov(const long n, const long npt, double xpt[],
 		gw = zero;
 		LOOP(i, n) {
 			if (w[i] == bigstp) {
-				w[i] = -step*glag[i];
+				w[i] = -step * glag[i];
 				temp = xopt[i] + w[i];
 				temp = MIN(temp, su[i]);
 				xalt[i] = MAX(temp, sl[i]);
@@ -2197,19 +2196,19 @@ void altmov(const long n, const long npt, double xpt[],
 		if (iflag == 1) {
 			curv = -curv;
 		}
-		if (curv > -gw && curv < -one_plus_sqrt2*gw) {
+		if (curv > -gw && curv < -one_plus_sqrt2 * gw) {
 			scale = -gw / curv;
 			LOOP(i, n) {
-				temp = xopt[i] + scale*w[i];
+				temp = xopt[i] + scale * w[i];
 				temp = MIN(temp, su[i]);
 				xalt[i] = MAX(temp, sl[i]);
 			}
-			temp = half*gw*scale;
-			*cauchy = temp*temp;
+			temp = half * gw*scale;
+			*cauchy = temp * temp;
 		}
 		else {
-			temp = gw + half*curv;
-			*cauchy = temp*temp;
+			temp = gw + half * curv;
+			*cauchy = temp * temp;
 		}
 
 		if (iflag != 0) {
@@ -2293,7 +2292,7 @@ void trsbox(const long n, const long npt, double* xpt,
 		d[i] = zero;
 		gnew[i] = gopt[i];
 	}
-	delsq = delta*delta;
+	delsq = delta * delta;
 	qred = zero;
 	*crvmin = onemin;
 
@@ -2309,7 +2308,7 @@ L30:
 			s[i] = -gnew[i];
 		}
 		else {
-			s[i] = beta*s[i] - gnew[i];
+			s[i] = beta * s[i] - gnew[i];
 		}
 		stepsq += s[i] * s[i];
 	}
@@ -2320,7 +2319,7 @@ L30:
 		gredsq = stepsq;
 		itermax = iterc + n - nact;
 	}
-	if (gredsq*delsq <= qred*1e-4*qred) {
+	if (gredsq*delsq <= qred * 1e-4*qred) {
 		goto L190;
 	}
 	goto L210;
@@ -2338,7 +2337,7 @@ L50:
 	if (resid <= zero) {
 		goto L90;
 	}
-	temp = sqrt(stepsq*resid + ds*ds);
+	temp = sqrt(stepsq*resid + ds * ds);
 	if (ds < zero) {
 		blen = (temp - ds) / stepsq;
 	}
@@ -2381,13 +2380,13 @@ L50:
 		ggsav = gredsq;
 		gredsq = zero;
 		LOOP(i, n) {
-			gnew[i] += stplen*hs[i];
+			gnew[i] += stplen * hs[i];
 			if (xbdi[i] == zero) {
 				gredsq += gnew[i] * gnew[i];
 			}
-			d[i] += stplen*s[i];
+			d[i] += stplen * s[i];
 		}
-		sdec = stplen*(ggsav - half*stplen*shs);
+		sdec = stplen * (ggsav - half * stplen*shs);
 		sdec = MAX(sdec, zero);
 		qred += sdec;
 	}
@@ -2407,7 +2406,7 @@ L50:
 		if (iterc == itermax) {
 			goto L190;
 		}
-		if (sdec <= qred*0.01) {
+		if (sdec <= qred * 0.01) {
 			goto L190;
 		}
 		beta = gredsq / ggsav;
@@ -2437,14 +2436,14 @@ L100:
 	goto L210;
 L120:
 	++iterc;
-	temp = gredsq*dredsq - dredg*dredg;
-	if (temp <= qred*1e-4*qred) {
+	temp = gredsq * dredsq - dredg * dredg;
+	if (temp <= qred * 1e-4*qred) {
 		goto L190;
 	}
 	temp = sqrt(temp);
 	LOOP(i, n) {
 		if (xbdi[i] == zero) {
-			s[i] = (dredg*d[i] - dredsq*gnew[i]) / temp;
+			s[i] = (dredg*d[i] - dredsq * gnew[i]) / temp;
 		}
 		else {
 			s[i] = zero;
@@ -2469,7 +2468,7 @@ L120:
 			}
 			ssq = d[i] * d[i] + s[i] * s[i];
 			temp = xopt[i] - sl[i];
-			temp = ssq - temp*temp;
+			temp = ssq - temp * temp;
 			if (temp > zero) {
 				temp = sqrt(temp) - s[i];
 				if (angbd*temp > tempa) {
@@ -2479,7 +2478,7 @@ L120:
 				}
 			}
 			temp = su[i] - xopt[i];
-			temp = ssq - temp*temp;
+			temp = ssq - temp * temp;
 			if (temp > zero) {
 				temp = sqrt(temp) + s[i];
 				if (angbd*temp > tempb) {
@@ -2507,10 +2506,10 @@ L150:
 	redsav = zero;
 	iu = (long)(angbd*17.0 + 3.1);
 	LOOP(i, iu) {
-		angt = angbd*(double)i / (double)iu;
-		sth = (angt + angt) / (one + angt*angt);
-		temp = shs + angt*(angt*dhd - dhs - dhs);
-		rednew = sth*(angt*dredg - sredg - half*sth*temp);
+		angt = angbd * (double)i / (double)iu;
+		sth = (angt + angt) / (one + angt * angt);
+		temp = shs + angt * (angt*dhd - dhs - dhs);
+		rednew = sth * (angt*dredg - sredg - half * sth*temp);
 		if (rednew > redmax) {
 			redmax = rednew;
 			isav = i;
@@ -2526,25 +2525,25 @@ L150:
 	}
 	if (isav < iu) {
 		temp = (rdnext - rdprev) / (redmax + redmax - rdprev - rdnext);
-		angt = angbd*((double)isav + half*temp) / (double)iu;
+		angt = angbd * ((double)isav + half * temp) / (double)iu;
 	}
-	cth = (one - angt*angt) / (one + angt*angt);
-	sth = (angt + angt) / (one + angt*angt);
-	temp = shs + angt*(angt*dhd - dhs - dhs);
-	sdec = sth*(angt*dredg - sredg - half*sth*temp);
+	cth = (one - angt * angt) / (one + angt * angt);
+	sth = (angt + angt) / (one + angt * angt);
+	temp = shs + angt * (angt*dhd - dhs - dhs);
+	sdec = sth * (angt*dredg - sredg - half * sth*temp);
 	if (sdec <= zero) {
 		goto L190;
 	}
 	dredg = zero;
 	gredsq = zero;
 	LOOP(i, n) {
-		gnew[i] = gnew[i] + (cth - one)*hred[i] + sth*hs[i];
+		gnew[i] = gnew[i] + (cth - one)*hred[i] + sth * hs[i];
 		if (xbdi[i] == zero) {
-			d[i] = cth*d[i] + sth*s[i];
+			d[i] = cth * d[i] + sth * s[i];
 			dredg += d[i] * gnew[i];
 			gredsq += gnew[i] * gnew[i];
 		}
-		hred[i] = cth*hred[i] + sth*hs[i];
+		hred[i] = cth * hred[i] + sth * hs[i];
 	}
 	qred += sdec;
 	if (iact > 0 && isav == iu) {
@@ -2591,7 +2590,7 @@ L210:
 			}
 			temp *= pq[k];
 			LOOP(i, n) {
-				hs[i] += temp*XPT(k, i);
+				hs[i] += temp * XPT(k, i);
 			}
 		}
 	}
@@ -2633,12 +2632,12 @@ void update(const long n, const long npt, double* bmat,
 		if (abs(ZMAT(knew, j)) > ztest) {
 			tempa = ZMAT(knew, 1);
 			tempb = ZMAT(knew, j);
-			temp = sqrt(tempa*tempa + tempb*tempb);
+			temp = sqrt(tempa*tempa + tempb * tempb);
 			tempa /= temp;
 			tempb /= temp;
 			LOOP(i, npt) {
-				temp = tempa*ZMAT(i, 1) + tempb*ZMAT(i, j);
-				ZMAT(i, j) = tempa*ZMAT(i, j) - tempb*ZMAT(i, 1);
+				temp = tempa * ZMAT(i, 1) + tempb * ZMAT(i, j);
+				ZMAT(i, j) = tempa * ZMAT(i, j) - tempb * ZMAT(i, 1);
 				ZMAT(i, 1) = temp;
 			}
 		}
@@ -2654,15 +2653,15 @@ void update(const long n, const long npt, double* bmat,
 	tempb = ZMAT(knew, 1) / temp;
 	tempa = tau / temp;
 	LOOP(i, npt) {
-		ZMAT(i, 1) = tempa*ZMAT(i, 1) - tempb*vlag[i];
+		ZMAT(i, 1) = tempa * ZMAT(i, 1) - tempb * vlag[i];
 	}
 	LOOP(j, n) {
 		jp = npt + j;
 		w[jp] = BMAT(knew, j);
-		tempa = (alpha*vlag[jp] - tau*w[jp]) / denom;
-		tempb = (-beta*w[jp] - tau*vlag[jp]) / denom;
+		tempa = (alpha*vlag[jp] - tau * w[jp]) / denom;
+		tempb = (-beta * w[jp] - tau * vlag[jp]) / denom;
 		LOOP(i, jp) {
-			BMAT(i, j) = BMAT(i, j) + tempa*vlag[i] + tempb*w[i];
+			BMAT(i, j) = BMAT(i, j) + tempa * vlag[i] + tempb * w[i];
 			if (i > npt) {
 				BMAT(jp, i - npt) = BMAT(i, j);
 			}
@@ -2688,6 +2687,8 @@ void rescue(const long n, const long npt,
 	long i, ih, ihp, ihq, ip, iq, iw, j, jp, jpn, k, knew, kold, kpt,
 		np, nptm, nrem;
 
+	xp = 0;
+	xq = 0;
 	zmat -= 1 + npt;
 	xpt -= 1 + npt;
 	xl -= 1;
@@ -2727,7 +2728,7 @@ void rescue(const long n, const long npt,
 	}
 	ih = 0;
 	LOOP(j, n) {
-		w[j] = half*sumpq*xopt[j];
+		w[j] = half * sumpq*xopt[j];
 		LOOP(k, npt) {
 			w[j] += pq[k] * XPT(k, j);
 		}
@@ -2749,7 +2750,7 @@ void rescue(const long n, const long npt,
 			PTSAUX(2, j) = temp;
 		}
 		if (abs(PTSAUX(2, j)) < half*abs(PTSAUX(1, j))) {
-			PTSAUX(2, j) = half*PTSAUX(1, j);
+			PTSAUX(2, j) = half * PTSAUX(1, j);
 		}
 		LOOP(i, ndim) {
 			BMAT(i, j) = zero;
@@ -2774,13 +2775,13 @@ void rescue(const long n, const long npt,
 		else {
 			BMAT(1, j) = -one / PTSAUX(1, j);
 			BMAT(jp, j) = one / PTSAUX(1, j);
-			BMAT(j + npt, j) = -half*(PTSAUX(1, j)*PTSAUX(1, j));
+			BMAT(j + npt, j) = -half * (PTSAUX(1, j)*PTSAUX(1, j));
 		}
 	}
 	if (npt >= n + np) {
 		for (k = 2 * np; k <= npt; ++k) {
 			iw = (long)(((double)(k - np) - half) / (double)n);
-			ip = k - np - iw*n;
+			ip = k - np - iw * n;
 			iq = ip + iw;
 			if (iq > n) {
 				iq -= n;
@@ -2863,7 +2864,7 @@ L120:
 				sum += w[npt + iq] * PTSAUX(iw, iq);
 			}
 		}
-		w[k] = half*sum*sum;
+		w[k] = half * sum*sum;
 	}
 	LOOP(k, npt) {
 		sum = zero;
@@ -2878,9 +2879,9 @@ L120:
 		LOOP(k, npt) {
 			sum += ZMAT(k, j)*w[k];
 		}
-		beta -= sum*sum;
+		beta -= sum * sum;
 		LOOP(k, npt) {
-			vlag[k] += sum*ZMAT(k, j);
+			vlag[k] += sum * ZMAT(k, j);
 		}
 	}
 	bsum = zero;
@@ -2891,15 +2892,15 @@ L120:
 			sum += BMAT(k, j)*w[k];
 		}
 		jp = j + npt;
-		bsum += sum*w[jp];
+		bsum += sum * w[jp];
 		for (ip = npt + 1; ip <= ndim; ++ip) {
 			sum += BMAT(ip, j)*w[ip];
 		}
-		bsum += sum*w[jp];
+		bsum += sum * w[jp];
 		vlag[jp] = sum;
 		distsq += XPT(knew, j)*XPT(knew, j);
 	}
-	beta = half*distsq*distsq + beta - bsum;
+	beta = half * distsq*distsq + beta - bsum;
 	vlag[*kopt] += one;
 	denom = zero;
 	vlmxsq = zero;
@@ -2909,7 +2910,7 @@ L120:
 			LOOP(j, nptm) {
 				hdiag += ZMAT(k, j)*ZMAT(k, j);
 			}
-			den = beta*hdiag + vlag[k] * vlag[k];
+			den = beta * hdiag + vlag[k] * vlag[k];
 			if (den > denom) {
 				kold = k;
 				denom = den;
@@ -2918,7 +2919,7 @@ L120:
 		temp = vlag[k] * vlag[k];
 		vlmxsq = MAX(vlmxsq, temp);
 	}
-	if (denom <= vlmxsq*0.01) {
+	if (denom <= vlmxsq * 0.01) {
 		w[ndim + knew] = -w[ndim + knew] - winc;
 		goto L120;
 	}
@@ -2935,7 +2936,7 @@ L260:
 			temp = pq[kpt] * w[j];
 			LOOP(i, j) {
 				++ih;
-				hq[ih] += temp*w[i];
+				hq[ih] += temp * w[i];
 			}
 		}
 		pq[kpt] = zero;
@@ -2956,26 +2957,26 @@ L260:
 
 		vquad = fbase;
 		if (ip > 0) {
-			ihp = (ip + ip*ip) / 2;
-			vquad += xp*(gopt[ip] + half*xp*hq[ihp]);
+			ihp = (ip + ip * ip) / 2;
+			vquad += xp * (gopt[ip] + half * xp*hq[ihp]);
 		}
 		if (iq > 0) {
-			ihq = (iq + iq*iq) / 2;
-			vquad += xq*(gopt[iq] + half*xq*hq[ihq]);
+			ihq = (iq + iq * iq) / 2;
+			vquad += xq * (gopt[iq] + half * xq*hq[ihq]);
 			if (ip > 0) {
 				iw = MAX(ihp, ihq) - (ip >= iq ? ip - iq : iq - ip);
-				vquad += xp*xq*hq[iw];
+				vquad += xp * xq*hq[iw];
 			}
 		}
 		LOOP(k, npt) {
 			temp = zero;
 			if (ip > 0) {
-				temp += xp*XPT(k, ip);
+				temp += xp * XPT(k, ip);
 			}
 			if (iq > 0) {
-				temp += xq*XPT(k, iq);
+				temp += xq * XPT(k, iq);
 			}
-			vquad += half*pq[k] * temp*temp;
+			vquad += half * pq[k] * temp*temp;
 		}
 
 		LOOP(i, n) {
@@ -2998,14 +2999,14 @@ L260:
 		diff = f - vquad;
 
 		LOOP(i, n) {
-			gopt[i] += diff*BMAT(kpt, i);
+			gopt[i] += diff * BMAT(kpt, i);
 		}
 		LOOP(k, npt) {
 			sum = zero;
 			LOOP(j, nptm) {
 				sum += ZMAT(k, j)*ZMAT(kpt, j);
 			}
-			temp = diff*sum;
+			temp = diff * sum;
 			if (ptsid[k] == zero) {
 				pq[k] += temp;
 			}
@@ -3014,15 +3015,15 @@ L260:
 				iq = (long)((double)np*ptsid[k] - (double)(ip*np));
 				ihq = (iq*iq + iq) / 2;
 				if (ip == 0) {
-					hq[ihq] += temp*(PTSAUX(2, iq)*PTSAUX(2, iq));
+					hq[ihq] += temp * (PTSAUX(2, iq)*PTSAUX(2, iq));
 				}
 				else {
 					ihp = (ip*ip + ip) / 2;
-					hq[ihp] += temp*(PTSAUX(1, ip)*PTSAUX(1, ip));
+					hq[ihp] += temp * (PTSAUX(1, ip)*PTSAUX(1, ip));
 					if (iq > 0) {
-						hq[ihq] += temp*(PTSAUX(1, iq)*PTSAUX(1, iq));
+						hq[ihq] += temp * (PTSAUX(1, iq)*PTSAUX(1, iq));
 						iw = MAX(ihp, ihq) - (ip >= iq ? ip - iq : iq - ip);
-						hq[iw] += temp*PTSAUX(1, ip)*PTSAUX(1, iq);
+						hq[iw] += temp * PTSAUX(1, ip)*PTSAUX(1, iq);
 					}
 				}
 			}
@@ -3059,6 +3060,7 @@ int bobyqb(const long n, const long npt,
 	int status = BOBYQA_SUCCESS;
 	const char* reason = NULL;
 	int iter = 0;
+	beta = 0;
 	x -= 1;
 	xl -= 1;
 	xu -= 1;
@@ -3088,7 +3090,7 @@ int bobyqb(const long n, const long npt,
 	knew = 0;
 	np = n + 1;
 	nptm = npt - np;
-	nh = n*np / 2;
+	nh = n * np / 2;
 
 	prelim(n, npt, objfun, data, &x[1], &xl[1], &xu[1], rhobeg, &xbase[1],
 		&XPT(1, 1), &fval[1], &gopt[1], &hq[1], &pq[1], &BMAT(1, 1),
@@ -3130,7 +3132,7 @@ L20:
 				}
 				temp = pq[k] * temp;
 				LOOP(i, n) {
-					gopt[i] += temp*XPT(k, i);
+					gopt[i] += temp * XPT(k, i);
 				}
 			}
 		}
@@ -3145,14 +3147,14 @@ L60:
 	dnorm = MIN(dnorm, delta);
 	if (dnorm < half*rho) {
 		ntrits = -1;
-		tempa = ten*rho;
-		distsq = tempa*tempa;
+		tempa = ten * rho;
+		distsq = tempa * tempa;
 		if (nf <= nfsav + 2) {
 			goto L650;
 		}
 		errbig = MAX(diffa, diffb);
 		errbig = MAX(errbig, diffc);
-		frhosq = rho*0.125*rho;
+		frhosq = rho * 0.125*rho;
 		if (crvmin > zero && errbig > frhosq*crvmin) {
 			goto L650;
 		}
@@ -3166,11 +3168,11 @@ L60:
 				bdtest = -w[j];
 			}
 			if (bdtest < bdtol) {
-				curv = hq[(j + j*j) / 2];
+				curv = hq[(j + j * j) / 2];
 				LOOP(k, npt) {
 					curv += pq[k] * (XPT(k, j)*XPT(k, j));
 				}
-				bdtest += half*curv*rho;
+				bdtest += half * curv*rho;
 				if (bdtest < bdtol) {
 					goto L650;
 				}
@@ -3180,20 +3182,20 @@ L60:
 	}
 	++ntrits;
 L90:
-	if (dsq <= xoptsq*0.001) {
-		fracsq = xoptsq*0.25;
+	if (dsq <= xoptsq * 0.001) {
+		fracsq = xoptsq * 0.25;
 		sumpq = zero;
 		LOOP(k, npt) {
 			sumpq += pq[k];
-			sum = -half*xoptsq;
+			sum = -half * xoptsq;
 			LOOP(i, n) {
 				sum += XPT(k, i)*xopt[i];
 			}
 			w[npt + k] = sum;
-			temp = fracsq - half*sum;
+			temp = fracsq - half * sum;
 			LOOP(i, n) {
 				w[i] = BMAT(k, i);
-				vlag[i] = sum*XPT(k, i) + temp*xopt[i];
+				vlag[i] = sum * XPT(k, i) + temp * xopt[i];
 				ip = npt + i;
 				LOOP(j, i) {
 					BMAT(ip, j) = BMAT(ip, j) + w[i] * vlag[j] + vlag[i] * w[j];
@@ -3210,27 +3212,27 @@ L90:
 				sumw += vlag[k];
 			}
 			LOOP(j, n) {
-				sum = (fracsq*sumz - half*sumw)*xopt[j];
+				sum = (fracsq*sumz - half * sumw)*xopt[j];
 				LOOP(k, npt) {
 					sum += vlag[k] * XPT(k, j);
 				}
 				w[j] = sum;
 				LOOP(k, npt) {
-					BMAT(k, j) = BMAT(k, j) + sum*ZMAT(k, jj);
+					BMAT(k, j) = BMAT(k, j) + sum * ZMAT(k, jj);
 				}
 			}
 			LOOP(i, n) {
 				ip = i + npt;
 				temp = w[i];
 				LOOP(j, i) {
-					BMAT(ip, j) = BMAT(ip, j) + temp*w[j];
+					BMAT(ip, j) = BMAT(ip, j) + temp * w[j];
 				}
 			}
 		}
 
 		ih = 0;
 		LOOP(j, n) {
-			w[j] = -half*sumpq*xopt[j];
+			w[j] = -half * sumpq*xopt[j];
 			LOOP(k, npt) {
 				w[j] += pq[k] * XPT(k, j);
 				XPT(k, j) = XPT(k, j) - xopt[j];
@@ -3297,7 +3299,7 @@ L230:
 			sumb += XPT(k, j)*xopt[j];
 			sum += BMAT(k, j)*d[j];
 		}
-		w[k] = suma*(half*suma + sumb);
+		w[k] = suma * (half*suma + sumb);
 		vlag[k] = sum;
 		w[npt + k] = suma;
 	}
@@ -3307,9 +3309,9 @@ L230:
 		LOOP(k, npt) {
 			sum += ZMAT(k, jj)*w[k];
 		}
-		beta -= sum*sum;
+		beta -= sum * sum;
 		LOOP(k, npt) {
-			vlag[k] += sum*ZMAT(k, jj);
+			vlag[k] += sum * ZMAT(k, jj);
 		}
 	}
 	dsq = zero;
@@ -3321,19 +3323,19 @@ L230:
 		LOOP(k, npt) {
 			sum += w[k] * BMAT(k, j);
 		}
-		bsum += sum*d[j];
+		bsum += sum * d[j];
 		jp = npt + j;
 		LOOP(i, n) {
 			sum += BMAT(jp, i)*d[i];
 		}
 		vlag[jp] = sum;
-		bsum += sum*d[j];
+		bsum += sum * d[j];
 		dx += d[j] * xopt[j];
 	}
-	beta = dx*dx + dsq*(xoptsq + dx + dx + half*dsq) + beta - bsum;
+	beta = dx * dx + dsq * (xoptsq + dx + dx + half * dsq) + beta - bsum;
 	vlag[kopt] += one;
 	if (ntrits == 0) {
-		denom = vlag[knew] * vlag[knew] + alpha*beta;
+		denom = vlag[knew] * vlag[knew] + alpha * beta;
 		if (denom < cauchy && cauchy > zero) {
 			LOOP(i, n) {
 				xnew[i] = xalt[i];
@@ -3342,7 +3344,7 @@ L230:
 			cauchy = zero;
 			goto L230;
 		}
-		if (denom <= half*(vlag[knew] * vlag[knew])) {
+		if (denom <= half * (vlag[knew] * vlag[knew])) {
 			if (nf > nresc) {
 				goto L190;
 			}
@@ -3351,7 +3353,7 @@ L230:
 
 	}
 	else {
-		delsq = delta*delta;
+		delsq = delta * delta;
 		scaden = zero;
 		biglsq = zero;
 		knew = 0;
@@ -3361,24 +3363,24 @@ L230:
 			LOOP(jj, nptm) {
 				hdiag += ZMAT(k, jj)*ZMAT(k, jj);
 			}
-			den = beta*hdiag + vlag[k] * vlag[k];
+			den = beta * hdiag + vlag[k] * vlag[k];
 			distsq = zero;
 			LOOP(j, n) {
 				tempa = XPT(k, j) - xopt[j];
-				distsq += tempa*tempa;
+				distsq += tempa * tempa;
 			}
 			temp = distsq / delsq;
-			temp = temp*temp;
+			temp = temp * temp;
 			temp = MAX(one, temp);
 			if (temp*den > scaden) {
-				scaden = temp*den;
+				scaden = temp * den;
 				knew = k;
 				denom = den;
 			}
 			temp *= vlag[k] * vlag[k];
 			biglsq = MAX(biglsq, temp);
 		}
-		if (scaden <= half*biglsq) {
+		if (scaden <= half * biglsq) {
 			if (nf > nresc) {
 				goto L190;
 			}
@@ -3412,13 +3414,13 @@ L360:
 			++ih;
 			temp = d[i] * d[j];
 			if (i == j) {
-				temp = half*temp;
+				temp = half * temp;
 			}
 			vquad += hq[ih] * temp;
 		}
 	}
 	LOOP(k, npt) {
-		vquad += half*pq[k] * (w[npt + k] * w[npt + k]);
+		vquad += half * pq[k] * (w[npt + k] * w[npt + k]);
 	}
 	diff = f - fopt - vquad;
 	diffc = diffb;
@@ -3445,13 +3447,13 @@ L360:
 			delta *= half;
 			delta = MAX(delta, tempa);
 		}
-		if (delta <= rho*1.5) {
+		if (delta <= rho * 1.5) {
 			delta = rho;
 		}
 		if (f < fopt) {
 			ksav = knew;
 			densav = denom;
-			delsq = delta*delta;
+			delsq = delta * delta;
 			scaden = zero;
 			biglsq = zero;
 			knew = 0;
@@ -3460,24 +3462,24 @@ L360:
 				LOOP(jj, nptm) {
 					hdiag += ZMAT(k, jj)*ZMAT(k, jj);
 				}
-				den = beta*hdiag + vlag[k] * vlag[k];
+				den = beta * hdiag + vlag[k] * vlag[k];
 				distsq = zero;
 				LOOP(j, n) {
 					temp = XPT(k, j) - xnew[j];
-					distsq += temp*temp;
+					distsq += temp * temp;
 				}
 				temp = distsq / delsq;
-				temp = temp*temp;
+				temp = temp * temp;
 				temp = MAX(one, temp);
 				if (temp*den > scaden) {
-					scaden = temp*den;
+					scaden = temp * den;
 					knew = k;
 					denom = den;
 				}
 				temp *= (vlag[k] * vlag[k]);
 				biglsq = MAX(biglsq, temp);
 			}
-			if (scaden <= half*biglsq) {
+			if (scaden <= half * biglsq) {
 				knew = ksav;
 				denom = densav;
 			}
@@ -3489,16 +3491,16 @@ L360:
 	pqold = pq[knew];
 	pq[knew] = zero;
 	LOOP(i, n) {
-		temp = pqold*XPT(knew, i);
+		temp = pqold * XPT(knew, i);
 		LOOP(j, i) {
 			++ih;
-			hq[ih] += temp*XPT(knew, j);
+			hq[ih] += temp * XPT(knew, j);
 		}
 	}
 	LOOP(jj, nptm) {
-		temp = diff*ZMAT(knew, jj);
+		temp = diff * ZMAT(knew, jj);
 		LOOP(k, npt) {
-			pq[k] += temp*ZMAT(k, jj);
+			pq[k] += temp * ZMAT(k, jj);
 		}
 	}
 	fval[knew] = f;
@@ -3515,13 +3517,13 @@ L360:
 		LOOP(j, n) {
 			sumb += XPT(k, j)*xopt[j];
 		}
-		temp = suma*sumb;
+		temp = suma * sumb;
 		LOOP(i, n) {
-			w[i] += temp*XPT(k, i);
+			w[i] += temp * XPT(k, i);
 		}
 	}
 	LOOP(i, n) {
-		gopt[i] += diff*w[i];
+		gopt[i] += diff * w[i];
 	}
 	if (f < fopt) {
 		kopt = knew;
@@ -3545,7 +3547,7 @@ L360:
 			}
 			temp = pq[k] * temp;
 			LOOP(i, n) {
-				gopt[i] += temp*XPT(k, i);
+				gopt[i] += temp * XPT(k, i);
 			}
 		}
 	}
@@ -3560,7 +3562,7 @@ L360:
 				sum += ZMAT(k, j)*vlag[k];
 			}
 			LOOP(k, npt) {
-				w[k] += sum*ZMAT(k, j);
+				w[k] += sum * ZMAT(k, j);
 			}
 		}
 		LOOP(k, npt) {
@@ -3569,7 +3571,7 @@ L360:
 				sum += XPT(k, j)*xopt[j];
 			}
 			w[k + npt] = w[k];
-			w[k] = sum*w[k];
+			w[k] = sum * w[k];
 		}
 		gqsq = zero;
 		gisq = zero;
@@ -3580,19 +3582,19 @@ L360:
 			}
 			if (xopt[i] == sl[i]) {
 				tempa = MIN(zero, gopt[i]);
-				gqsq += tempa*tempa;
+				gqsq += tempa * tempa;
 				tempa = MIN(zero, sum);
-				gisq += tempa*tempa;
+				gisq += tempa * tempa;
 			}
 			else if (xopt[i] == su[i]) {
 				tempa = MAX(zero, gopt[i]);
-				gqsq += tempa*tempa;
+				gqsq += tempa * tempa;
 				tempa = MAX(zero, sum);
-				gisq += tempa*tempa;
+				gisq += tempa * tempa;
 			}
 			else {
 				gqsq += gopt[i] * gopt[i];
-				gisq += sum*sum;
+				gisq += sum * sum;
 			}
 			vlag[npt + i] = sum;
 		}
@@ -3619,13 +3621,13 @@ L360:
 	if (ntrits == 0) {
 		goto L60;
 	}
-	if (f <= fopt + tenth*vquad) {
+	if (f <= fopt + tenth * vquad) {
 		goto L60;
 	}
-	tempa = two*delta;
-	tempb = ten*rho;
-	tempa = tempa*tempa;
-	tempb = tempb*tempb;
+	tempa = two * delta;
+	tempb = ten * rho;
+	tempa = tempa * tempa;
+	tempb = tempb * tempb;
 	distsq = MAX(tempa, tempb);
 L650:
 	knew = 0;
@@ -3633,7 +3635,7 @@ L650:
 		sum = zero;
 		LOOP(j, n) {
 			tempa = XPT(k, j) - xopt[j];
-			sum += tempa*tempa;
+			sum += tempa * tempa;
 		}
 		if (sum > distsq) {
 			knew = k;
@@ -3643,18 +3645,18 @@ L650:
 	if (knew > 0) {
 		dist = sqrt(distsq);
 		if (ntrits == -1) {
-			tempa = tenth*delta;
-			tempb = half*dist;
+			tempa = tenth * delta;
+			tempb = half * dist;
 			delta = MIN(tempa, tempb);
-			if (delta <= rho*1.5) {
+			if (delta <= rho * 1.5) {
 				delta = rho;
 			}
 		}
 		ntrits = 0;
-		adelt = tenth*dist;
+		adelt = tenth * dist;
 		adelt = MIN(adelt, delta);
 		adelt = MAX(adelt, rho);
-		dsq = adelt*adelt;
+		dsq = adelt * adelt;
 		goto L90;
 	}
 	if (ntrits == -1) {
@@ -3668,7 +3670,7 @@ L650:
 	}
 L680:
 	if (rho > rhoend) {
-		delta = half*rho;
+		delta = half * rho;
 		ratio = rho / rhoend;
 		if (ratio <= 16.0) {
 			rho = rhoend;
@@ -3677,7 +3679,7 @@ L680:
 			rho = sqrt(ratio)*rhoend;
 		}
 		else {
-			rho = tenth*rho;
+			rho = tenth * rho;
 		}
 		delta = MAX(delta, rho);
 
@@ -3764,14 +3766,14 @@ int bobyqa(const long n, const long npt,
 	ndim = npt + n;
 	ixb = 1;
 	ixp = ixb + n;
-	ifv = ixp + n*npt;
+	ifv = ixp + n * npt;
 	ixo = ifv + npt;
 	igo = ixo + n;
 	ihq = igo + n;
-	ipq = ihq + n*np / 2;
+	ipq = ihq + n * np / 2;
 	ibmat = ipq + npt;
-	izmat = ibmat + ndim*n;
-	isl = izmat + npt*(npt - np);
+	izmat = ibmat + ndim * n;
+	isl = izmat + npt * (npt - np);
 	isu = isl + n;
 	ixn = isu + n;
 	ixa = ixn + n;

@@ -2689,6 +2689,8 @@ void rescue(const long n, const long npt,
 
 	xp = 0;
 	xq = 0;
+	ihp = 0;
+	ihq = 0;
 	zmat -= 1 + npt;
 	xpt -= 1 + npt;
 	xl -= 1;

@@ -775,6 +775,7 @@ public:
 
 	void LoadIntervals(void)
 	{
+
 		stringstream parse;
 		int position = 0;
 		bool ok = false;
@@ -787,12 +788,10 @@ public:
 
 		while (istr)
 		{
-			istr.getline(textline, 256);
+			istr.getline(textline, 256); position++;
 			if (strstr(textline, "Integral") != NULL) { ok = true; break; }
 		}
 		if (!ok) { cout << "File integrals.txt in the processing folder with experimental spectrum is corrupted!" << endl; exit_; }
-
-		position = int(istr.tellg());
 
 		int i = 0;
 		istr.getline(textline, 256);
@@ -808,8 +807,8 @@ public:
 
 		if (nIntervals < 1) { cout << "There is no defined intervals in the integrals.txt file for the experimental spectrum!" << endl; exit_; }
 
-		istr.clear();
-		istr.seekg(position);
+		istr.clear(); istr.seekg(0);
+		for(i = 1; i <= position; i++) istr.getline(textline, 256);
 
 		int j = 0;
 		double StartPPM = 0, EndPPM = 0, IntVal = 0;
@@ -834,7 +833,7 @@ public:
 			EndPoint[i] = int((PPMOffset - EndPPM) / PPMStep) + 1;
 			if (EndPoint[i] < 1) EndPoint[i] = 1;
 			if (EndPoint[i] > ExperimentalSpec.nPoints) EndPoint[i] = ExperimentalSpec.nPoints;
-			if (EndPoint[i] - StartPoint[i] <= 2) { cout << "Spectrum interval " << i << " is too small. Please increase the number of points." << endl; exit_; }
+			if (EndPoint[i] - StartPoint[i] <= 2) { cout << "Spectrum interval " << i << " is too small. Please increase the number of points." << endl; }
 			nPointsRated += (EndPoint[i] - StartPoint[i] + 1);
 		}
 

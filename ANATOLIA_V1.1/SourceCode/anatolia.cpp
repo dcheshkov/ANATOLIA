@@ -833,7 +833,7 @@ public:
 			EndPoint[i] = int((PPMOffset - EndPPM) / PPMStep) + 1;
 			if (EndPoint[i] < 1) EndPoint[i] = 1;
 			if (EndPoint[i] > ExperimentalSpec.nPoints) EndPoint[i] = ExperimentalSpec.nPoints;
-			if (EndPoint[i] - StartPoint[i] <= 2) { cout << "Spectrum interval " << i << " is too small. Please increase the number of points." << endl; }
+			if (EndPoint[i] - StartPoint[i] <= 2) { cout << "Spectrum interval " << i << " is too small. Please increase the number of points." << endl; exit_; }
 			nPointsRated += (EndPoint[i] - StartPoint[i] + 1);
 		}
 

@@ -21,9 +21,9 @@ Program utilizes GNU scientific library.
 All source code is placed in single file anatolia.cpp
 
 ANATOLIA V_1.0
-anatolia.cpp 88272 bytes,
-MD5  (anatolia.cpp) = 5bfc48f957cdb36681c2f14c6e7a3585
-SHA1 (anatolia.cpp) = 711fa924aa7a09332647636648c1b423d0977cf5
+anatolia.cpp 90405 bytes,
+MD5  (anatolia.cpp) = 2c724dc52fb02ed524775dd6a8b9d60f
+SHA1 (anatolia.cpp) = fd831e2464accc623aae3606268661ddf4fbb037
 
 For compilation on Unix type systems g++ compiller and
 GNU scientific library (GSL, for code development) should be installed.

@@ -22,8 +22,8 @@ All source code is placed in single file anatolia.cpp
 
 ANATOLIA V_1.0
 anatolia.cpp 90405 bytes,
-MD5  (anatolia.cpp) = 2c724dc52fb02ed524775dd6a8b9d60f
-SHA1 (anatolia.cpp) = fd831e2464accc623aae3606268661ddf4fbb037
+MD5  (anatolia.cpp) = 35aa6d904ab2d18b81ca585397f4b5de
+SHA1 (anatolia.cpp) = be4a6054369c1e6c00609e8720f2959106c45f0a
 
 For compilation on Unix type systems g++ compiller and
 GNU scientific library (GSL, for code development) should be installed.

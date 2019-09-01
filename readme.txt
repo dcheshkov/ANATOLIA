@@ -3,12 +3,12 @@
 ***              Program for total lineshape analysis                 ***
 ***                         of NMR spectra                            ***
 *************************************************************************
-***         (C) 2017 Dmitry Cheshkov, Dmitry Sinitsyn,                ***
-***                     Kirill Sheberstov                             ***
+***           (C) 2017 Dmitry Cheshkov, Dmitry Sinitsyn,              ***
+***                        Kirill Sheberstov                          ***
 *************************************************************************
-***                     dcheshkov@gmail.com                           ***
-***                  http://anatolia.nmrclub.ru                       ***
-***             https://github.com/dcheshkov/ANATOLIA                 ***
+***                       dcheshkov@gmail.com                         ***
+***                    http://anatolia.nmrclub.ru                     ***
+***               https://github.com/dcheshkov/ANATOLIA               ***
 *************************************************************************
 ***   D.A. Cheshkov, K.F. Sheberstov, D.O. Sinitsyn, V.A. Chertkov,   ***
 ***  ANATOLIA: NMR software for spectral analysis of total lineshape, ***

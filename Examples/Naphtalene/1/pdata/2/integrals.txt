@@ -1,0 +1,7 @@
+   Current data set:
+   NAME =	naphtalene	EXPNO =	1000	PROCNO = 1
+   DU   =	D:/data/dima/nmr
+
+   Number   Integrated Region     Integral
+     1      7.955      7.878         1.00000
+     2      7.558      7.482         0.99100

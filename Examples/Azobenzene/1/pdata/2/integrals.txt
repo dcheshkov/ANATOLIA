@@ -1,0 +1,7 @@
+   Current data set:
+   NAME =	azo_5D_Ia	EXPNO =	1001	PROCNO = 1
+   USER =	anatolia	DU    =	D:
+
+   Number   Integrated Region     Integral
+     1      7.990      7.860         1.00000
+     2      7.667      7.523         1.68914

@@ -30,12 +30,12 @@ GNU scientific library (GSL, for code development) should be installed.
 
 Debian Linux compilation commands:
 apt-get install g++ libgsl0-dev (with root privileges)
-wget http://anatolia.nmrclub.ru/ANATOLIA_v1.0/SourceCode/anatolia.cpp
+wget http://anatolia.nmrclub.ru/ANATOLIA_V1.0/SourceCode/anatolia.cpp
 g++ -std=c++11 -static anatolia.cpp -lgsl -lgslcblas -o ANATOLIA
 
 FreeBSD compilation commands:
 pkg install gsl (with root privileges)
-wget http://anatolia.nmrclub.ru/ANATOLIA_v1.0/SourceCode/anatolia.cpp
+wget http://anatolia.nmrclub.ru/ANATOLIA_V1.0/SourceCode/anatolia.cpp
 c++ -std=c++11 -static -I/usr/local/include -L/usr/local/lib anatolia.cpp -lgsl -lgslcblas -o ANATOLIA
 
 MacOS GSL instalation & ANATOLIA compilation commands:
@@ -47,15 +47,15 @@ make
 make install (with root privileges)
 cd ..
 rm -rf gsl-*
-curl -O http://anatolia.nmrclub.ru/ANATOLIA_v1.0/SourceCode/anatolia.cpp
+curl -O http://anatolia.nmrclub.ru/ANATOLIA_V1.0/SourceCode/anatolia.cpp
 g++ -std=c++11 anatolia.cpp /usr/local/lib/libgsl.a /usr/local/lib/libgslcblas.a -o ANATOLIA
 
 Windows
 ANATOLIA MS Visual Studio Projects with compiled GSL library can be downloaded from
 the following links:
-http://anatolia.nmrclub.ru/ANATOLIA_v1.0/SourceCode/MSVC17_Project.rar
+http://anatolia.nmrclub.ru/ANATOLIA_V1.0/SourceCode/MSVC17_Project.rar
 for Microsoft Visual Studio 2017 (x86 and x64), and
-http://anatolia.nmrclub.ru/ANATOLIA_v1.0/SourceCode/MSVC10_Project_WinXP.rar
+http://anatolia.nmrclub.ru/ANATOLIA_V1.0/SourceCode/MSVC10_Project_WinXP.rar
 for Microsoft Visual Studio 2010 (x86, which we use for CLR4.0 WinXP binaries generation).
 
 Users are offered to use appropriate compiled binary file, but if there is no such file

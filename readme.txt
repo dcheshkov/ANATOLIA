@@ -38,3 +38,7 @@
          ANATOLIA reads the input files from current directory,
            when called without arguments, or can take path
             to working directory as command line argument.
+
+Our recent papers:
+Total lineshape analysis of a-tetrahydrofuroic acid 1H NMR spectra - http://doi.org/10.48550/arXiv.2209.03708
+Total line shape analysis of high-resolution NMR spectra -  http://doi.org/10.1016/bs.arnmr.2019.11.001

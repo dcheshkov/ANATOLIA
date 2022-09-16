@@ -1,0 +1,9 @@
+   Current data set:
+   NAME =	THFCOOH	EXPNO =	3	PROCNO = 1
+   DU   =	D:/data/nich/nmr
+
+   Number   Integrated Region     Integral
+     1      4.484      4.316         1.00000
+     2      4.031      3.792         1.99712
+     3      2.367      2.154         1.02125
+     4      2.082      1.815         3.00780

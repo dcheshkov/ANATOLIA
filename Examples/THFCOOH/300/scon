@@ -1,0 +1,23 @@
+##TITLE= Parameter file, XWIN-NMR		Version 3.6.b.2
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nich
+$$ Wed Jul  6 19:49:48 2022 Russia TZ 2 Standard Time (UT+3h)  nich@DPX300
+$$ D:/data/dima/nmr/THFCOOH_MeOD/3/scon
+##$BLKPA= (0..15)
+3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+##$BLKTR= (0..15)
+3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+##$DE1= 2
+##$DE2= 2
+##$DEADC= 4
+##$DEPA= 2
+##$DERX= 3
+##$PHASP4= (0..15)
+0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 
+##$PHASPR= (0..15)
+3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+##$SHAPPR= (0..15)
+1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 1.6 
+##END=

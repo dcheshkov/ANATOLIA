@@ -1,0 +1,18 @@
+##TITLE= Audit trail, TOPSPIN		Version 2.1
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ /data_new/data/dima_oldbbo/nmr/THFCOOH_MeOD/4/audita.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2022-06-29 16:10:15.324 +0300>,<nmr>,<av600>,<go>,<TOPSPIN 2.1>,
+      <created by zg
+	started at 2022-06-29 16:05:25.085 +0300,
+	POWCHK disabled, PULCHK disabled,
+       configuration hash MD5:
+       4F 04 D1 7B 1D 76 8B 28 C3 27 67 8C 99 C5 03 74
+       data hash MD5: 128K
+       1A 9B 11 EA 00 08 F4 6D 0E 97 97 0D 6C 18 73 F9>)
+##END=
+
+$$ hash MD5
+$$ AC F0 8B 61 C2 F4 E0 44 A7 C7 3A FD 53 0B 41 78

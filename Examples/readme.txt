@@ -17,7 +17,7 @@
 
                           Tutorial examples
 
-There are two examples of the analysis of 1H spectra of ODCB and of styrene.
+There are several examples of 1H NMR spectra analysis (ODCB, styrene, etc).
 Spectra are stored in the Bruker NMR data format as datasets. So the folder
 names 'ODCB' and 'Styrene' corresponds to 'ExpName'. All the necessary input
 files for ANATOLIA are located also there.

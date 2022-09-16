@@ -1,0 +1,10 @@
+   Current data set:
+   NAME =	THFCOOH_MeOD_600	EXPNO =	1	PROCNO = 1
+   USER =	anatolia	DU    =	D:
+
+   Number   Integrated Region     Integral
+     1      4.421      4.381         1.00000
+     2      3.982      3.934         1.02310
+     3      3.889      3.840         1.02251
+     4      2.307      2.237         1.02307
+     5      2.033      1.871         3.09886

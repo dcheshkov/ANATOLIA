@@ -1,0 +1,16 @@
+##TITLE= Audit trail, XWIN-NMR		Version 3.6.b.2
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nich
+$$ D:/data/dima/nmr/THFCOOH_MeOD/3/audita.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, WHAT)
+(   1,<2022-07-06 19:53:30.67 +0300>,<nich>,<DPX300>,
+      <created by zg, POWCHK disabled, PULCHK disabled
+       configuration hash MD5:
+       A4 13 82 04 38 77 2E 5D CD DB 8A CC 78 F2 B8 EF
+       data hash MD5: 74848
+       33 EC D1 27 37 C9 09 C6 BE 36 32 2B 5D EA 44 4B>)
+##END=
+
+$$ hash MD5
+$$ 12 C4 1F CF 73 D5 B3 9C 22 35 DF 25 5A CF 3E 29

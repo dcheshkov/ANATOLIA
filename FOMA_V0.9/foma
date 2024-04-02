@@ -53,7 +53,7 @@
 	char	resultfile[256] = { 0 };
 	int	i = 0, j = 0, k = 0;
 
-	//usleep(50000);
+	usleep(50000);
         //if (kbhit() != 0) { getch(); fflush(stdin); }
 	while (kbhit()) getch();
 

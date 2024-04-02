@@ -59,3 +59,7 @@ window with parameters to optimize is opened. For example, to analyze the 'A' mu
 an 'AM3' spin system, 'foma 3' or 'foma am3' should be written. In the interactive window,
 it is possible to define starting values for coupling constants, but for many cases,
 the default values are suitable.
+
+The program saves the output in a text file named like 'Multiplet_AM6X_2.176p.txt' and a
+1r type file 'Multiplet_AM6X_2.176p.1r' in the current procno folder. It also creates
+999 procno which contains the calculated theoretical multiplet.

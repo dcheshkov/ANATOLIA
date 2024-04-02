@@ -53,6 +53,9 @@
 	char	resultfile[256] = { 0 };
 	int	i = 0, j = 0, k = 0;
 
+	usleep(50000);
+        if (kbhit() != 0) { getch(); fflush(stdin); }
+
 	Multiplet* M = GetGlobalMultiplet();
 	if(i_argc > 2) strcpy(M->Name, i_argv[2]);
 	else M->Name[0] = '6';

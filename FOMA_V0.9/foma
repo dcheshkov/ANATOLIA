@@ -186,10 +186,11 @@
 
 	FreeConsole();
 	AllocConsole();
-	usleep(1000);
+	usleep(50000);
 	SetConsoleCtrlHandler(NULL, FALSE);
 	freopen("CONOUT$", "wt", stdout);
 	freopen("CONIN$", "rt", stdin); 
+	usleep(50000);
 
 	for(i = 0; i < M->nLBs; i++)
 	{
@@ -823,7 +824,7 @@ bool ShowInteractiveForm(void* D)
 	ParamsHwnd[M->nSpinGroups + 2] = CreateWindowA("edit", textline, WS_VISIBLE | WS_CHILD | WS_BORDER | ES_RIGHT | WS_TABSTOP, 60, 91 + 43 * M->nSpinGroups, 555, 30, hwnd, NULL, NULL, NULL);
 	SendMessage(ParamsHwnd[M->nSpinGroups + 2], WM_SETFONT, (LPARAM)hFont, TRUE);
 
-	ParamsHwnd[M->nSpinGroups + 3] = CreateWindowA("button", "Done!", WS_VISIBLE | WS_CHILD | WS_TABSTOP, 190, 100 + 43 * (M->nSpinGroups + 1), 80, 40, hwnd, NULL, NULL, NULL);
+	ParamsHwnd[M->nSpinGroups + 3] = CreateWindowA("button", "RUN!", WS_VISIBLE | WS_CHILD | WS_TABSTOP, 190, 100 + 43 * (M->nSpinGroups + 1), 80, 40, hwnd, NULL, NULL, NULL);
 	SendMessage(ParamsHwnd[M->nSpinGroups + 3], WM_SETFONT, (LPARAM)hFont, TRUE);
 
 	ParamsHwnd[M->nSpinGroups + 4] = CreateWindowA("button", "Cancel", WS_VISIBLE | WS_CHILD | WS_TABSTOP, 290, 100 + 43 * (M->nSpinGroups + 1), 80, 40, hwnd, NULL, NULL, NULL);

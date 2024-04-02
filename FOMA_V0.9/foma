@@ -185,6 +185,7 @@
 	int StartPointIdx = 0, EndPointIdx = 0;
 
 	FreeConsole();
+	usleep(50000);
 	AllocConsole();
 	usleep(50000);
 	SetConsoleCtrlHandler(NULL, FALSE);

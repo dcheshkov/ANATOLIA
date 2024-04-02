@@ -53,8 +53,9 @@
 	char	resultfile[256] = { 0 };
 	int	i = 0, j = 0, k = 0;
 
-	usleep(50000);
-        if (kbhit() != 0) { getch(); fflush(stdin); }
+	//usleep(50000);
+        //if (kbhit() != 0) { getch(); fflush(stdin); }
+	while (kbhit()) getch();
 
 	Multiplet* M = GetGlobalMultiplet();
 	if(i_argc > 2) strcpy(M->Name, i_argv[2]);
@@ -350,6 +351,7 @@
 	if(M->LineMult != NULL) free(M->LineMult);
 	if(M->LBs != NULL) free(M->LBs);
 
+	//freopen("CONIN$", "rt", stdin); 
 	while (kbhit()) getch();
 	i2 = 0; i3 = 11;
 	for(i1 = 400; i1 > 0 && (!i2); i1--)
@@ -358,7 +360,7 @@
 		if(i3 > round(i1 / 40.0))
 		{
 			i3 = i1 / 40;
-			printf("\rWindow are closed in %d seconds. Press any key to hold. ", i3);
+			printf("\rWindow are closed in %d seconds. ", i3);
 		}
 		usleep(25000);
 	}

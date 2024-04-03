@@ -40,6 +40,7 @@
 		double* PoitsFreq;
 		double* TheorPoits;
 		double* ExpPoits;
+		double  ReScale;
 		void	(*Calc)(void*);
 	} Multiplet;
 
@@ -321,7 +322,8 @@
 
 	M->Calc(M);
 
-	d1 = Magnitude / M->TheorPoits[PivotPointIdx - StartPointIdx];
+	d1 = M->ReScale;
+	//d1 = Magnitude / M->TheorPoits[PivotPointIdx - StartPointIdx];
 	for(i = 0; i < M->nPoints; i++) M->TheorPoits[i] *= d1;
 
 	memset(Spec, 0, SI * sizeof(int));
@@ -409,6 +411,7 @@
 		double* PoitsFreq;
 		double* TheorPoits;
 		double* ExpPoits;
+		double  ReScale;
 		void	(*Calc)(void*);
 	} Multiplet;
 
@@ -892,6 +895,7 @@ double Badness(double *Parameters, void* D)
 	tmp = ExpDotTheor / TheorDotTheor;
 	for(i = 0; i < M->nPoints; i++)
 		M->TheorPoits[i] *= tmp;
+	M->ReScale = tmp;
 
 	tmp = 0;
 	for(i = 0; i < M->nPoints; i++)

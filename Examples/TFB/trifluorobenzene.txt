@@ -1,0 +1,1 @@
+This is 1H (300.13 MHz, procno 1) and 19F (282.40 MHz, procno 19) spectra of 1,3,5-trifluorobenzene sample (0.5 M in acetone-d6, 303 K).

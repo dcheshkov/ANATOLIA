@@ -1,0 +1,6 @@
+   Current data set:
+   NAME =	TFB	EXPNO =	1	PROCNO = 1
+   USER =	sci	DU    =	D:
+
+   Number   Integrated Region     Integral
+     1      7.014      6.869         1.00000

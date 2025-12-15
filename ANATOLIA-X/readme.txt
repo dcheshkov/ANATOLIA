@@ -5,6 +5,7 @@
 *************************************************************************
 ***         (C) 2025 Dmitry Cheshkov, Dmitry Sinitsyn,                ***
 ***                     Kirill Sheberstov                             ***
+***            Distributed under GNU GPL v3.0 License                 ***
 *************************************************************************
 ***                     dcheshkov@gmail.com                           ***
 ***                  http://anatolia.nmrclub.ru                       ***
@@ -14,7 +15,7 @@
              ANATOLIA-X derived from ANATOLIA V1.2 code.
 The spectrum calculation module uses the weak-coupling (X) approximation.
 
-    The algorythm automatically detects strongly coupled spin groups
+    The algorithm automatically detects strongly coupled spin groups
     based on the criterion |deltaResFreq/J| < 10 and performs explicit
          strong-coupling treatment within these spin groups.
 
@@ -31,7 +32,7 @@ The spectrum calculation module uses the weak-coupling (X) approximation.
             Working with Bruker NMR format (dataset) only.
 
             Versions for ALL platforms compiled and linked 
-            in 'static' mode, so they are a distributed as
+             in 'static' mode, so they are distributed as
                         single executable files.
  
             All source code currently located in single c++
@@ -39,7 +40,7 @@ The spectrum calculation module uses the weak-coupling (X) approximation.
  
         For matrix diagonalization it utilizes procedures from
        GNU scientific library (https://www.gnu.org/software/gsl/).
-          Powell's BOBYQA algoritm used for multidimentional
+          Powell's BOBYQA algoritm used for multidimensional
                         function minimization.
  
          ANATOLIA reads the input files from current directory,

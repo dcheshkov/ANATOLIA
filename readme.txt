@@ -39,6 +39,8 @@
            when called without arguments, or can take path
             to working directory as command line argument.
 
-Our recent papers:
+
+Our recent papers and preprints:
+Empirical Reevaluation of Computational Limits in Exact NMR Spectral Simulation: 16 Spin-½ Nuclei on Standard Hardware - http://doi.org/10.13140/RG.2.2.21355.20008
 Total lineshape analysis of a-tetrahydrofuroic acid 1H NMR spectra - http://doi.org/10.48550/arXiv.2209.03708
 Total line shape analysis of high-resolution NMR spectra -  http://doi.org/10.1016/bs.arnmr.2019.11.001

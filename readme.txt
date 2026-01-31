@@ -41,7 +41,7 @@
 
 
 Our recent papers and preprints:
-Mirror Symmetry of the NMR Spectrum and the Connection with the Structure of Spin Hamiltonian Matrix Representations - http://doi.org/10.13140/RG.2.2.20227.57128
+Mirror Symmetry of the NMR Spectrum and the Connection with the Structure of Spin Hamiltonian Matrix Representations - http://doi.org/10.13140/RG.2.2.19473.90724
 Empirical Reevaluation of Computational Limits in Exact NMR Spectral Simulation: 16 Spin-½ Nuclei on Standard Hardware - http://doi.org/10.13140/RG.2.2.21355.20008
 Total lineshape analysis of a-tetrahydrofuroic acid 1H NMR spectra - http://doi.org/10.48550/arXiv.2209.03708
 Total line shape analysis of high-resolution NMR spectra -  http://doi.org/10.1016/bs.arnmr.2019.11.001

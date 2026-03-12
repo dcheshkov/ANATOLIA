@@ -14,7 +14,7 @@
 Program utilizes GNU scientific library.
 All source code is placed in single file anatolia_x.cpp
 
-ANATOLIA-X (basen on ANATOLIA V1.2)
+ANATOLIA-X (based on ANATOLIA V1.2)
 anatolia_x.cpp 96175 bytes,
 MD5  (anatolia_x.cpp) = f1c70db953cfacc42a8c639d5962a567
 SHA1 (anatolia_x.cpp) = 65af89f01f7c406eb1df5cdb8c22fe412d8259e1

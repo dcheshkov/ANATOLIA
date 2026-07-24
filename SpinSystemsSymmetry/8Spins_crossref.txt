@@ -1,0 +1,117 @@
+# Cross-reference of 8Spins.pdf rows against 8Spins.txt (machine-verified)
+# For every PDF row: closure of its generators (indices into S8_Perms.txt) was
+# computed, |Aut| compared with the claimed order, the canonical form matched
+# against the catalogue, magnetic (twin) groups and the residual factor group
+# order |Gq| = |Aut| / prod(n_g!) extracted. Vertex orbits are under full Aut.
+#
+pdf  |Aut| ok  twins      |Gq|  orbits       txt-section    name
+  1      1 OK  1,1,1,1,1,1,1,1    1  1+1+1+1+1+1+1+1 order 1 #1     A
+  2      2 OK  2,1,1,1,1,1,1    1  2+1+1+1+1+1+1 order 2 #4     A2
+  3      4 OK  2,2,1,1,1,1    1  2+2+1+1+1+1  order 4 #9     A2X2
+  4     24 OK  4,1,1,1,1     1  4+1+1+1+1    order 24 #5    A4
+  5    120 OK  5,1,1,1       1  5+1+1+1      order 120 #1   A5
+  6      4 OK  2,1,1,1,1,1,1    2  2+2+2+1+1    order 4 #8     AA'MM'X2
+  7      8 OK  2,1,1,1,1,1,1    4  4+2+1+1      order 8 #5     (D2-A'4)X2
+  8     16 OK  2,2,2,2       1  2+2+2+2      order 16 #4    A2M2P2X2
+  9      8 OK  2,1,1,1,1,1,1    4  4+2+2        order 8 #9     (D2-A'4,MM')X2
+ 10     48 OK  4,2,1,1       1  4+2+1+1      order 48 #5    A2X4
+ 11     36 OK  3,3,1,1       1  3+3+1+1      order 36 #1    A3X3
+ 12     16 OK  2,2,2,1,1     2  4+2+1+1      order 16 #9    (D4-A'4)X2
+ 13    720 OK  6,1,1         1  6+1+1        order 720 #2   A6
+ 14     72 OK  3,3,1,1       2  6+1+1        order 72 #2    (A3)2
+ 15     48 OK  2,2,2,1,1     6  6+1+1        order 48 #4    (A2)3
+ 16     24 OK  3,2,2,1       1  3+2+2+1      order 24 #4    A2M2X3
+ 17    240 OK  5,2,1         1  5+2+1        order 240 #1   A2X5
+ 18    144 OK  4,3,1         1  4+3+1        order 144 #2   A3X4
+ 19   5040 OK  7,1           1  7+1          order 5040 #1  A7
+ 20      4 OK  2,1,1,1,1,1,1    2  2+2+2+2      order 4 #7     AA'MM'PP'X2
+ 21     48 OK  4,1,1,1,1     2  4+2+2        order 48 #3    AA'MM'X4
+ 22     72 OK  3,3,2         1  3+3+2        order 72 #1    A2M3X3
+ 23     16 OK  2,2,2,1,1     2  4+2+2        order 16 #7    C2-(A2A2'MM')X2
+ 24   1440 OK  6,2           1  6+2          order 1440 #1  A2X6
+ 25     72 OK  3,3,1,1       2  6+2          order 72 #3    A3A3'XX'
+ 26     96 OK  2,2,2,2       6  6+2          order 96 #1    (A2)3X2
+ 27    720 OK  5,3           1  5+3          order 720 #1   A3X5
+ 28    192 OK  4,2,2         2  4+4          order 192 #1   (D4-A'4)X4
+ 29     32 OK  2,2,2,2       2  4+4          order 32 #3    (A2)2M2X2
+ 30     24 OK  2,1,1,1,1,1,1   12  6+2          order 24 #1    (D6-A'6)X2
+ 31  40320 OK  8             1  8            order 40320 #1 A8
+ 32   1152 OK  4,4           2  8            order 1152 #1  (A4)2
+ 33    128 OK  2,2,2,2       8  8            order 128 #1   D4-(A2)'4
+ 34      6 OK  3,1,1,1,1,1    1  3+1+1+1+1+1  order 6 #4     A3
+ 35      2 OK  1,1,1,1,1,1,1,1    2  2+2+1+1+1+1  order 2 #3     AA'XX'
+ 36      4 OK  1,1,1,1,1,1,1,1    4  4+1+1+1+1    order 4 #6     D2-A'4
+ 37      8 OK  1,1,1,1,1,1,1,1    8  4+2+2        order 8 #6     (D2-A'4)(MM'XX')
+ 38     16 OK  1,1,1,1,1,1,1,1   16  4+4          order 16 #8    (D2-A'4)(D2-X'4)
+ 39     32 OK  2,2,1,1,1,1    8  4+4          order 32 #2    (D4-A'4)(D2-X'4)
+ 40      8 OK  2,2,2,1,1     1  2+2+2+1+1    order 8 #12    A2M2X2
+ 41      4 OK  1,1,1,1,1,1,1,1    4  4+2+1+1      order 4 #4     D2-(A'4,XX')
+ 42     16 OK  2,2,1,1,1,1    4  4+2+2        order 16 #2    (D2-A'4)M2X2
+ 43      6 OK  1,1,1,1,1,1,1,1    6  3+3+1+1      order 6 #3     D3/C3v-(A'X')3
+ 44     24 OK  3,1,1,1,1,1    4  4+3+1        order 24 #2    (D2-A'4)X3
+ 45      4 OK  1,1,1,1,1,1,1,1    4  2+2+2+2      order 4 #5     (AA'MM')(PP'XX')
+ 46      8 OK  1,1,1,1,1,1,1,1    8  4+4          order 8 #10    D2h-(A'X')4
+ 47      8 OK  2,2,1,1,1,1    2  2+2+2+2      order 8 #11    AA'MM'P2X2
+ 48     16 OK  2,2,1,1,1,1    4  4+2+2        order 16 #3    (D4-A'4)(MM'XX')
+ 49      4 OK  1,1,1,1,1,1,1,1    4  4+2+2        order 4 #3     (D2-A'4,(-)MM'(-)XX')
+ 50     96 OK  4,2,2         1  4+2+2        order 96 #3    A3M2X2
+ 51     12 OK  2,1,1,1,1,1,1    6  3+3+2        order 12 #2    (D3/C3v-(A'M')3)X2
+ 52     32 OK  2,2,2,2       2  4+2+2        order 32 #4    (D4-A'4)M2X2
+ 53     64 OK  2,2,2,2       4  4+4          order 64 #2    (D4-A'4)(D4-X'4)
+ 54     16 OK  2,2,1,1,1,1    4  4+4          order 16 #5    (D2-A'4,M2,M2')
+ 55    144 OK  3,3,2         2  6+2          order 144 #1   (A3)2X2
+ 56     24 OK  1,1,1,1,1,1,1,1   24  4+4          order 24 #3    (A'X')4
+ 57    576 OK  4,4           1  4+4          order 576 #1   A4X4
+ 58    384 OK  2,2,2,2      24  8            order 384 #1   (A2)4
+ 59     48 OK  1,1,1,1,1,1,1,1   48  8            order 48 #1    Oh-A'8
+ 60      8 OK  1,1,1,1,1,1,1,1    8  4+4          order 8 #3     [sq] D4/C4v-(A'X')4
+ 61     32 OK  1,1,1,1,1,1,1,1   32  8            order 32 #1    (D2-A'4)2
+ 62      8 OK  2,2,1,1,1,1    2  4+1+1+1+1    order 8 #13    D4-A'4
+ 63     12 OK  3,2,1,1,1     1  3+2+1+1+1    order 12 #6    A3X2
+ 64     10 OK  1,1,1,1,1,1,1,1   10  5+1+1+1      order 10 #1    D5-A'5
+ 65      2 OK  1,1,1,1,1,1,1,1    2  2+2+2+1+1    order 2 #2     AA'MM'XX'
+ 66      6 OK  1,1,1,1,1,1,1,1    6  6+1+1        order 6 #1     D3/C3v-A'6
+ 67      4 OK  1,1,1,1,1,1,1,1    4  4+2+2        order 4 #1     D2-(A'4,(-)MM',(|)XX')
+ 68     12 OK  2,1,1,1,1,1,1    6  6+2          order 12 #3    (D3/C3v-A'6)X2
+ 69     96 OK  4,1,1,1,1     4  4+4          order 96 #2    (D2-A'4)X4
+ 70      8 OK  1,1,1,1,1,1,1,1    8  4+4          order 8 #4     [dia] D4/C4v-(A'X')4
+ 71      8 OK  2,2,1,1,1,1    2  4+2+1+1      order 8 #1     C2-(A2A2'XX')
+ 72      3 OK  1,1,1,1,1,1,1,1    3  3+3+1+1      order 3 #1     C3-(A'X')3
+ 73      6 OK  1,1,1,1,1,1,1,1    6  6+2          order 6 #2     C3v-(A'6,XX')
+ 74     12 OK  1,1,1,1,1,1,1,1   12  6+1+1        order 12 #5    D6/D3h/D3d-A'6
+ 75     12 OK  3,1,1,1,1,1    2  3+2+2+1      order 12 #1    AA'MM'X3
+ 76     20 OK  2,1,1,1,1,1,1   10  5+2+1        order 20 #1    (D5-A'5)X2
+ 77     48 OK  3,2,2,1       2  4+3+1        order 48 #2    (D4-A'4)X3
+ 78     14 OK  1,1,1,1,1,1,1,1   14  7+1          order 14 #1    D7-A'7
+ 79      2 OK  1,1,1,1,1,1,1,1    2  2+2+2+2      order 2 #1     AA'MM'PP'XX'
+ 80      4 OK  1,1,1,1,1,1,1,1    4  4+4          order 4 #2     D2/C2v-(A'X')4
+ 81      8 OK  1,1,1,1,1,1,1,1    8  8            order 8 #7     D2h-A'8
+ 82     64 OK  2,2,2,2       4  8            order 64 #1    D2-(A2)'4
+ 83     16 OK  1,1,1,1,1,1,1,1   16  8            order 16 #6    D4h-A'8
+ 84      8 OK  1,1,1,1,1,1,1,1    8  8            order 8 #8     D4/C4v-A'8
+ 85      8 OK  2,2,1,1,1,1    2  4+2+2        order 8 #2     C2-(A2A2'MM'XX')
+ 86      6 OK  2,1,1,1,1,1,1    3  3+3+2        order 6 #5     C3-(A'M')3X2
+ 87     12 OK  1,1,1,1,1,1,1,1   12  6+2          order 12 #4    D3h/D3d-(A'6XX')
+ 88     60 OK  3,1,1,1,1,1   10  5+3          order 60 #1    (D5-A'5)X3
+ 89      4 OK  1,1,1,1,1,1,1,1    4  4+4          order 4 #10    C4-(A'X')4
+ 90     16 OK  1,1,1,1,1,1,1,1   16  8            order 16 #1    D8-A'8
+#
+# Markers in 8Spins.pdf rows 60/70 (same name D4/C4v-(A'X')4, decoded):
+#   [sq]  row 60: eclipsed stack of the two squares (vertex over vertex);
+#         inter-square classes 4+4+8, incl. the distinguished A'iX'i matching.
+#   [dia] row 70: staggered stack, X'-square rotated by 45 deg (vertex over
+#         edge midpoint); inter-square classes 8+8, no distinguished matching.
+# Together with row 89 C4-(A'X')4 (generic twist angle, reflections killed,
+# chiral) they form the full twist family of two stacked squares: 0 / 45 / generic.
+#
+# Markers (-) and (|) in rows 49/67 (D2 core + two pairs, decoded):
+#   the symbol tells which C2 axis of the D2 frame the pair sits on (is fixed
+#   pointwise by that involution, swapped by the other two).
+#   row 49 (-)MM'(-)XX': both pairs on the SAME axis
+#         (verified: (56)(78) fixes both pairs; the other two elements swap both);
+#   row 67 (-)MM',(|)XX': pairs on DIFFERENT axes
+#         (verified: (34)(56)(78) fixes MM' & swaps XX'; (12)(57)(68) vice versa).
+# Abstractly the D2-A'4 core is K4 with three distinct perfect matchings, and all
+# three involutions are interchangeable by relabelling (S4 permutes the matchings
+# as S3), so "same axis vs different axes" is the ONLY invariant: constructed
+# variants collapse as (a,a)=(ab,ab)->row 49 and (a,b)=(a,ab)->row 67.

@@ -1,0 +1,16 @@
+N=4: closed subgroup classes = 8 (productive rounds: 2, 0.0s)
+  orders: 1(x1) 2(x2) 4(x2) 6(x1) 8(x1) 24(x1)
+--- order 1 (x1) ---
+0 1 2 3 4 5 
+--- order 2 (x2) ---
+0 1 2 2 1 3 
+0 0 1 2 3 3 
+--- order 4 (x2) ---
+0 1 2 2 1 0 
+0 0 1 2 0 0 
+--- order 6 (x1) ---
+0 0 0 1 1 1 
+--- order 8 (x1) ---
+0 0 1 1 0 0 
+--- order 24 (x1) ---
+0 0 0 0 0 0 

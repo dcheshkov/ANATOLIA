@@ -194,7 +194,7 @@ The order histogram reproduces the catalogue `materials/8Spins.txt` exactly (31 
 | 13 | 20832 | **1316** |
 | 14 | 75154 | **2866** |
 
-With the initial terms `a(1) = a(2) = 1` the sequence of realizable classes reads `1, 1, 3, 8, 11, 27, 36, 90, 131, 282, 394, 948, 1316, 2866`; as of July 2026 it is **absent** from the OEIS and has been submitted there.
+With the initial terms `a(1) = a(2) = 1` the sequence of realizable classes reads `1, 1, 3, 8, 11, 27, 36, 90, 131, 282, 394, 948, 1316, 2866`; as of July 2026 it is **absent** from the OEIS and will be submitted there.
 
 > **Two more enumeration routes.** Besides the constructive BFS, the catalogue can be reached by *enumerate-then-filter* (list all subgroup classes of `S_N`, keep the closed ones) and — the route that reaches `N = 14` — by the *orbit-partition decomposition*. Both, with a completeness proof of the decomposition, are in §8.5: the enumerate-then-filter route independently reproduces `a(3..13)`, and the decomposition delivers `a(14) = 2866` (`= 1316 + f(14)`, `f(14) = 1550`).
 

@@ -41,6 +41,8 @@
 
 
 Our recent papers and preprints:
+Symmetry of Spin Systems as Automorphisms of Undirected Weighted Graphs: Realizability Criterion and Complete
+Taxonomy up to 14 Spins - http://doi.org/10.48550/arXiv.2607.23834
 Facilitating Total Lineshape Analysis of Complex NMR Spectra With FOMA and ANATOLIA-X Multiplet Fitting Tools,
 Exemplified by the Vinyl Norbornene Case - http://doi.org/10.1002/mrc.70111
 The Origin of Mirror Symmetry in High-Resolution Nuclear Magnetic Resonance Spectra - http://doi.org/10.5194/mr-7-15-2026
